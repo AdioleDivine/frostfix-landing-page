@@ -1,4 +1,7 @@
+import About from "@/components/layout/About";
 import Header from "@/components/layout/Header";
+import Hero from "@/components/layout/Hero";
+import HowItWorks from "@/components/layout/HowItWorks";
 import { Box } from "@chakra-ui/react";
 import Head from "next/head";
 
@@ -13,6 +16,9 @@ export default function Home() {
       </Head>
       <Box as="main" className="home-main">
         <Header />
+        <Hero />
+        <HowItWorks />
+        <About />
       </Box>
     </>
   );
