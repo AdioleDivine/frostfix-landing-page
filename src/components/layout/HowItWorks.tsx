@@ -37,7 +37,7 @@ const works = [
 
 const HowItWorks = () => {
   return (
-    <Box>
+    <Box p={10}  bg="rgba(26,32,44,.3)">
       <Heading textAlign={"center"} py={10} fontSize={"xxx-large"}>
         How it Works
       </Heading>
