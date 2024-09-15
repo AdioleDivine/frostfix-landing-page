@@ -26,7 +26,7 @@ const NavLinks = () => {
     <Flex gap={10}>
       {links.map((link, i) => (
         <Box key={i}>
-          <Link as={NextLink} fontSize={"sm"}  href={link.href}>
+          <Link as={NextLink} fontSize={"sm"} color={'black'}  href={link.href}>
             {link.name}
           </Link>
         </Box>

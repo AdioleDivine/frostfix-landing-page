@@ -6,7 +6,7 @@ import ActionBtns from '../core/ActionBtns'
 
 const Header = () => {
   return (
-    <Flex justify={"space-around"} p={4} align={"center"}>
+    <Flex justify={"space-around"} p={4} align={"center"} bg={'white'}>
         <Logo />
         <NavLinks />
         <ActionBtns />

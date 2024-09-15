@@ -4,7 +4,7 @@ import React from 'react'
 const ActionBtns = () => {
   return (
    <Flex>
-    <Button fontSize={"xs"} px={5}>GET THE APP NOW</Button>
+    <Button fontSize={"xs"} color={'white'} bg={'black'} px={5}>GET THE APP NOW</Button>
    </Flex>
   )
 }

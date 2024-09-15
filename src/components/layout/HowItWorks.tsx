@@ -37,12 +37,12 @@ const works = [
 
 const HowItWorks = () => {
   return (
-    <Box p={10}  bg="rgba(26,32,44,.3)">
-      <Heading textAlign={"center"} py={10} fontSize={"xxx-large"}>
+    <Box p={10}  bg="rgba(252,252,252,1)">
+      <Heading textAlign={"center"} py={10} fontSize={"xxx-large"} color={'black'}>
         How it Works
       </Heading>
 
-      <Grid p={10} gap={20} templateColumns={"repeat(auto-fit, minmax(300px, 1fr))"}>
+      <Grid p={10} color={'black'} gap={20} templateColumns={"repeat(auto-fit, minmax(300px, 1fr))"}>
         {works.map((work, i) => (
           <GridItem key={i}>
             <Card src={work.src} text={work.text} title={work.title} />

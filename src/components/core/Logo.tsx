@@ -3,7 +3,7 @@ import React from 'react'
 
 const Logo = () => {
   return (
-   <Heading as="h2">Frost-Fix</Heading>
+   <Heading as="h2" color={'black'}>Frost-Fix</Heading>
   )
 }
 

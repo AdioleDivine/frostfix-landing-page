@@ -12,10 +12,10 @@ import React from "react";
 const Hero = () => {
   const SIZE = "150px";
   return (
-    <Box minH={"60vh"} pt={20}>
+    <Box minH={"60vh"} pt={20} bg={"white"}>
       <Center textAlign={"center"} flexDirection={"column"}>
-        <Heading fontSize={"xxx-large"}>Forstfix Snow Removal</Heading>
-        <Text my={2} maxW={"500px"} mx="auto">
+        <Heading fontSize={"xxx-large"} color={'black'}>Forstfix Snow Removal</Heading>
+        <Text my={2} maxW={"500px"} color={'black'} mx="auto">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt,
           dicta. Totam perspiciatis corrupti nihil officia?
         </Text>
