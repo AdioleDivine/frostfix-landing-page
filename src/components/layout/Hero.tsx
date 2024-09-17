@@ -1,44 +1,118 @@
 import {
   Box,
   Center,
-  Flex,
+  Grid,
+  GridItem,
   Heading,
-  Image,
-  Link,
   Text,
+  Button,
+  Flex,
+  Image,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import React from "react";
 
+// Motion elements from framer-motion
+const MotionBox = motion(Box);
+const MotionHeading = motion(Heading);
+const MotionText = motion(Text);
+const MotionButton = motion(Button);
+const MotionImage = motion(Image);
+
 const Hero = () => {
-  const SIZE = "150px";
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0, x: -100 }, // Initial state: faded and slid to the left
+    visible: { opacity: 1, x: 0, transition: { duration: 1 } }, // Final state: full opacity, normal position
+  };
+
   return (
-    <Box minH={"60vh"} pt={20} bg={"white"}>
-      <Center textAlign={"center"} flexDirection={"column"}>
-        <Heading fontSize={"xxx-large"} color={'black'}>Forstfix Snow Removal</Heading>
-        <Text my={2} maxW={"500px"} color={'black'} mx="auto">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt,
-          dicta. Totam perspiciatis corrupti nihil officia?
-        </Text>
-      </Center>
+    <MotionBox
+      minH={"auto"} // Adjusted minimum height for the hero section
+      pt={[10, 20]} // Padding for mobile and desktop
+      position="relative"
+      bg="#FCFCFC" // Solid white background
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants} // Apply the animation variants
+    >
+      <Grid
+        templateColumns={{
+          base: "1fr", // Single column for mobile
+          md: "1fr", // Single column for tablet
+          lg: "1fr", // Single column for desktop
+        }}
+        gap={6} // Gap between grid items
+        alignItems="center"
+      >
+        {/* Left section: Heading, Text, and Waitlist Button */}
+        <GridItem colSpan={1}>
+          <Center textAlign={"center"} flexDirection={"column"} px={[4, 8]}>
+            {/* Animated Heading */}
+            <MotionHeading
+              fontSize={["3xl", "5xl", "7xl"]}
+              color={"black"}
+              mb={4}
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 1 }} // Delay to make it smoother
+            >
+              Frostfix Snow Removal
+            </MotionHeading>
 
-      <Flex my={10} justify={"center"} gap={10} align={"center"}>
-        <Link href="">
-          <Image w={SIZE} src="/images/app-store.png" />
-        </Link>
+            {/* Animated Text */}
+            <MotionText
+              my={2}
+              maxW={"500px"}
+              color={"#000E1B80"}
+              fontSize={["sm", "md", "lg"]}
+              mx="auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1, duration: 1 }} // Delayed to sync with heading
+            >
+              Book a plow service online. Pay a flat rate and enjoy top-of-the-line customer service.
+            </MotionText>
 
-        <Link href="">
-          <Image w={SIZE} src="/images/play-store.png" />
-        </Link>
-      </Flex>
+            {/* Animated Waitlist Button */}
+            <Flex justifyContent="center" mt={6}>
+              <MotionButton
+                fontSize={"0.9rem"}
+                backgroundColor={"#0B2545"} // Original background color
+                color={"white"}
+                px={5}
+                paddingTop={"1.7rem"}
+                paddingBottom={"1.7rem"}
+                paddingLeft={"2rem"}
+                paddingRight={"2rem"}
+                _hover={{
+                  backgroundColor: "#123a6b", // Lighter shade on hover
+                  transform: "scale(1.05)", // Slightly enlarge the button
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
+                }}
+                transition="all 0.3s ease" // Smooth transition for hover effects
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 1 }} // Delayed further
+              >
+                Sign up to Waitlist
+              </MotionButton>
+            </Flex>
 
-      {/* <Image src="/images/hero-bg.png" zIndex={-1} position={"absolute"} bottom={"30px"} /> */}
-
-      <Flex bgImage={"/images/hero-bg.pn"} bgSize={"cover"} bgPos={"center center"} justify={"center"} mt={20}>
-        <Image src="/images/phone-2.png" />
-        <Image src="/images/phone-1.png" />
-        <Image src="/images/phone-2.png" />
-      </Flex>
-    </Box>
+            {/* Animated Phone Image */}
+            <Center mt={10}>
+              <MotionImage
+                src="/images/iPhone15.png" // Use the new image
+                w={["100%", "400px", "500px"]} // Adjust width for responsiveness
+                initial={{ opacity: 0, x: 100 }} // Start off to the right and faded
+                animate={{ opacity: 1, x: 0 }} // Move into view and fade in
+                transition={{ delay: 2, duration: 1 }} // Delayed the longest
+              />
+            </Center>
+          </Center>
+        </GridItem>
+      </Grid>
+    </MotionBox>
   );
 };
 
