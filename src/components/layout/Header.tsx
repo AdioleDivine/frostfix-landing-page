@@ -29,7 +29,7 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure(); // Manage menu state
 
   return (
-    <Flex justify="space-between" align="center" p={4} bg="#FCFCFC">
+    <Flex justify="space-between" align="center" p={4} bg="white">
       {/* Logo on the left */}
       <Box>
         <Logo />
@@ -37,7 +37,7 @@ const Header = () => {
 
       {/* Nav Links in the center */}
       <Box display={{ base: 'none', md: 'block' }}>
-        <NavLinks />
+        <NavLinks onClose={undefined} />
       </Box>
 
       {/* Action Button on the right */}

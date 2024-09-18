@@ -54,7 +54,7 @@ const Features = () => {
         as={motion.div} // Animate the grid
         initial={{ opacity: 0, y: 20 }} // Initial state
         animate={inView ? { opacity: 1, y: 0 } : {}} // Trigger animation on in-view
-        transition={{ duration: 0.8, ease: "easeOut" }} // Animation transition
+        // transition={{ duration: 0.8, ease: "easeOut" }} // Animation transition
         templateColumns={{
           base: "1fr", // Single column for mobile
           md: "repeat(2, 1fr)", // Two columns for tablet and desktop
@@ -97,7 +97,7 @@ const Features = () => {
           <FeatureCard
             title="Weather Detection"
             text="By incorporating Dark Sky’s technology, Pacify Snow finds how much snow has accumulated in your specific area. This leads to fairer pricing."
-            icon="/images/weather.png"  // Replace with the correct PNG path
+            icon="/images/proximity.png"  // Replace with the correct PNG path
           />
         </GridItem>
 

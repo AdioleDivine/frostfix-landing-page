@@ -31,7 +31,7 @@ const Hero = () => {
       minH={"auto"} // Adjusted minimum height for the hero section
       pt={[10, 20]} // Padding for mobile and desktop
       position="relative"
-      bg="#FCFCFC" // Solid white background
+      bg="white" // Solid white background
       initial="hidden"
       animate="visible"
       variants={containerVariants} // Apply the animation variants
@@ -93,7 +93,7 @@ const Hero = () => {
                 transition="all 0.3s ease" // Smooth transition for hover effects
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }} // Delayed further
+                // transition={{ delay: 1.5, duration: 1 }} // Delayed further
               >
                 Sign up to Waitlist
               </MotionButton>

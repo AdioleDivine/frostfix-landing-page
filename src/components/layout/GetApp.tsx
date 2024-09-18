@@ -31,7 +31,7 @@ const GetApp = () => {
       >
         {/* Left side image of phones */}
         <Image
-          src="/images/appPhone.png" // Path to the app phone image
+          // src="/images/appPhone.png" // Path to the app phone image
           alt="App display"
           maxW={["100%", "80%", "100%"]} // Full width for mobile, 80% for tablet
           display="block"

@@ -55,7 +55,7 @@ const AboutSection = () => {
   });
 
   return (
-    <Box p={[6, 10, 20]} bg={"#FCFCFC"} ref={ref}> {/* Background color set to #FCFCFC */}
+    <Box p={[6, 10, 20]} bg={"white"} ref={ref}> {/* Background color set to #FCFCFC */}
       <Grid
         templateColumns={{
           base: "1fr", // Single column for mobile
@@ -66,10 +66,10 @@ const AboutSection = () => {
         as={motion.div}  // Animate the grid
         initial={{ opacity: 0 }}  // Initial state
         animate={inView ? { opacity: 1 } : {}}  // Trigger animation on scroll
-        transition={{ duration: 0.8 }}  // Animation duration
+        // transition={{ duration: 0.8 }}  // Animation duration
       >
         {/* Left Column: About Forstfix */}
-        <GridItem>
+        <GridItem bgColor={"#FCFCFC"} padding={"3.7rem"} borderRadius={"1rem"}>
           <Heading fontSize={["2rem", "2.5rem", "2.5rem"]} color={"black"} mb={4}>
             About Forstfix
           </Heading>
