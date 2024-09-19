@@ -37,13 +37,13 @@ export default function Home() {
         <Box id="how-it-works">
           <HowItWorks />
         </Box>
+
+        <Box id="about">
+          <About />
+        </Box>
         
         <Box id="features">
           <Features />
-        </Box>
-        
-        <Box id="about">
-          <About />
         </Box>
         
         <Box id="contact">

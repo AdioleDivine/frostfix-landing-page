@@ -81,6 +81,7 @@ const Hero = () => {
                 backgroundColor={"#0B2545"} // Original background color
                 color={"white"}
                 px={5}
+                borderRadius={"0.8rem"}
                 paddingTop={"1.7rem"}
                 paddingBottom={"1.7rem"}
                 paddingLeft={"2rem"}
@@ -95,7 +96,7 @@ const Hero = () => {
                 animate={{ opacity: 1 }}
                 // transition={{ delay: 1.5, duration: 1 }} // Delayed further
               >
-                Sign up to Waitlist
+                Get Early Access
               </MotionButton>
             </Flex>
 

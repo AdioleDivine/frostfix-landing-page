@@ -11,8 +11,9 @@ const ActionBtns = () => {
         px={5}
         paddingTop={"1.5rem"}
         paddingBottom={"1.5rem"}
-        paddingLeft={"3.5rem"}
-        paddingRight={"3.5rem"}
+        paddingLeft={"1.9rem"}
+        paddingRight={"1.9rem"}
+        borderRadius={"0.8rem"}
         _hover={{
           backgroundColor: "#123a6b", // Lighter shade on hover
           transform: "scale(1.05)", // Slightly enlarge the button
@@ -20,7 +21,7 @@ const ActionBtns = () => {
         }}
         transition="all 0.3s ease" // Smooth transition for hover effects
       >
-        Waitlist
+        Get Early Access
       </Button>
     </Flex>
   )
