@@ -36,10 +36,18 @@ const Waitlist = () => {
     visible: { opacity: 1, x: 0, transition: { duration: 1, delay: 0.5 } }, // Slide into view with a delay
   };
 
+  const radioVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <>
-      <Header showActionButton={false} /> {/* Use Header without the action button */}
-      
+      {/* Header with background color changed to #FCFCFC */}
+      <Box as="header" bg="#FCFCFC" p={4}>
+        <Header showActionButton={false} /> {/* Use Header without the action button */}
+      </Box>
+
       {/* Snowflake Background */}
       <Box
         position="absolute"
@@ -151,41 +159,55 @@ const Waitlist = () => {
               Signing up as a
             </Text>
             
-            {/* Styled Radio Buttons */}
+            {/* Styled Radio Buttons with transition animation */}
             <RadioGroup onChange={setValue} value={value} color="#0B2545">
               <Stack direction="row" gap="2rem">
-                <Radio
-                  value="contractor"
-                  size="lg" // Larger radio button
-                  _hover={{
-                    borderColor: "blue.500", // Hover color for radio
-                    transform: "scale(1.1)", // Slightly enlarge on hover
-                    transition: "all 0.3s ease", // Smooth hover transition
-                  }}
-                  _checked={{
-                    bg: "blue.900", // Dark blue fill when checked
-                    color: "white", // White checkmark when selected
-                    borderColor: "blue.900", // Border matches the dark blue fill
-                  }}
+                <MotionBox
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  variants={radioVariants}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  Contractor
-                </Radio>
-                <Radio
-                  value="homeowner"
-                  size="lg" // Larger radio button
-                  _hover={{
-                    borderColor: "blue.500", // Hover color for radio
-                    transform: "scale(1.1)", // Slightly enlarge on hover
-                    transition: "all 0.3s ease", // Smooth hover transition
-                  }}
-                  _checked={{
-                    bg: "blue.900", // Dark blue fill when checked
-                    color: "white", // White checkmark when selected
-                    borderColor: "blue.900", // Border matches the dark blue fill
-                  }}
+                  <Radio
+                    value="contractor"
+                    size="lg" // Larger radio button
+                    _hover={{
+                      borderColor: "blue.500", // Hover color for radio
+                      transition: "all 0.3s ease", // Smooth hover transition
+                    }}
+                    _checked={{
+                      bg: "blue.900", // Dark blue fill when checked
+                      color: "white", // White checkmark when selected
+                      borderColor: "blue.900", // Border matches the dark blue fill
+                    }}
+                  >
+                    Contractor
+                  </Radio>
+                </MotionBox>
+                <MotionBox
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  variants={radioVariants}
+                  initial="hidden"
+                  animate="visible"
                 >
-                  Homeowner
-                </Radio>
+                  <Radio
+                    value="homeowner"
+                    size="lg" // Larger radio button
+                    _hover={{
+                      borderColor: "blue.500", // Hover color for radio
+                      transition: "all 0.3s ease", // Smooth hover transition
+                    }}
+                    _checked={{
+                      bg: "blue.900", // Dark blue fill when checked
+                      color: "white", // White checkmark when selected
+                      borderColor: "blue.900", // Border matches the dark blue fill
+                    }}
+                  >
+                    Homeowner
+                  </Radio>
+                </MotionBox>
               </Stack>
             </RadioGroup>
             
