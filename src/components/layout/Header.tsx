@@ -27,7 +27,7 @@ const Header = ({ showActionButton = true }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Flex justify="space-between" align="center" p={4} paddingTop={"1rem"} paddingLeft={"4rem"} paddingRight={"4rem"} bg="white">
+    <Flex justify="space-between" align="center" p={4} paddingTop={"1rem"} paddingLeft={"4rem"} paddingRight={"4rem"} bg="#FCFCFC">
       {/* Logo */}
       <Box>
         <Logo />
