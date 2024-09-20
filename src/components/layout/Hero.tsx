@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React from "react";
+import Link from "next/link"; // Import the Link component from Next.js
 
 // Motion elements from framer-motion
 const MotionBox = motion(Box);
@@ -31,7 +32,7 @@ const Hero = () => {
       minH={"auto"} // Adjusted minimum height for the hero section
       pt={[10, 20]} // Padding for mobile and desktop
       position="relative"
-      bg="white" // Solid white background
+      bgColor={"#FCFCFC"} // Solid white background
       initial="hidden"
       animate="visible"
       variants={containerVariants} // Apply the animation variants
@@ -74,30 +75,31 @@ const Hero = () => {
               Book a plow service online. Pay a flat rate and enjoy top-of-the-line customer service.
             </MotionText>
 
-            {/* Animated Waitlist Button */}
+            {/* Link to Waitlist page */}
             <Flex justifyContent="center" mt={6}>
-              <MotionButton
-                fontSize={"0.9rem"}
-                backgroundColor={"#0B2545"} // Original background color
-                color={"white"}
-                px={5}
-                borderRadius={"0.8rem"}
-                paddingTop={"1.7rem"}
-                paddingBottom={"1.7rem"}
-                paddingLeft={"2rem"}
-                paddingRight={"2rem"}
-                _hover={{
-                  backgroundColor: "#123a6b", // Lighter shade on hover
-                  transform: "scale(1.05)", // Slightly enlarge the button
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
-                }}
-                transition="all 0.3s ease" // Smooth transition for hover effects
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                // transition={{ delay: 1.5, duration: 1 }} // Delayed further
-              >
-                Get Early Access
-              </MotionButton>
+              <Link href="/waitlist" passHref>
+                <MotionButton
+                  fontSize={"0.9rem"}
+                  backgroundColor={"#0B2545"} // Original background color
+                  color={"white"}
+                  px={5}
+                  borderRadius={"0.8rem"}
+                  paddingTop={"1.7rem"}
+                  paddingBottom={"1.7rem"}
+                  paddingLeft={"2rem"}
+                  paddingRight={"2rem"}
+                  _hover={{
+                    backgroundColor: "#123a6b", // Lighter shade on hover
+                    transform: "scale(1.05)", // Slightly enlarge the button
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
+                  }}
+                  transition="all 0.3s ease" // Smooth transition for hover effects
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  Get Early Access
+                </MotionButton>
+              </Link>
             </Flex>
 
             {/* Animated Phone Image */}

@@ -70,7 +70,7 @@ const HowItWorks = () => {
 
   return (
     <MotionBox
-      p={10}
+      p={{ base: 4, md: 10 }} // Reduced padding on mobile, larger on tablet and desktop
       bg="rgba(252,252,252,1)"
       initial="hidden"
       whileInView="visible"
@@ -83,7 +83,7 @@ const HowItWorks = () => {
 
       {/* Responsive grid with appropriate gap between columns and items */}
       <Grid
-        p={10}
+        p={{ base: 4, md: 10 }} // Reduce padding on mobile
         color={"black"}
         gap={20}
         templateColumns={"repeat(auto-fit, minmax(300px, 1fr))"}

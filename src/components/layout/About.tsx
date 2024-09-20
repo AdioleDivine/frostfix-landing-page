@@ -55,7 +55,7 @@ const AboutSection = () => {
   });
 
   return (
-    <Box p={[6, 10, 20]} bg={"white"} ref={ref}> {/* Background color set to #FCFCFC */}
+    <Box p={[6, 10, 20]} bgColor={"#FCFCFC"} ref={ref}> {/* Background color set to #FCFCFC */}
       <Grid
         templateColumns={{
           base: "1fr", // Single column for mobile

@@ -2,10 +2,9 @@ import { Flex, Box, IconButton, useDisclosure, VStack } from '@chakra-ui/react';
 import React from 'react';
 import Logo from '../core/Logo';
 import NavLinks from '../core/NavLinks';
-import ActionBtns from '../core/ActionBtns';
+import ActionBtns from '../core/ActionBtns'; // The early access button
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Hamburger Icon SVG Path
 const HamburgerIcon = () => (
   <motion.svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <motion.path
@@ -15,7 +14,6 @@ const HamburgerIcon = () => (
   </motion.svg>
 );
 
-// Close Icon SVG Path
 const CloseIcon = () => (
   <motion.svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 70.4">
     <motion.path
@@ -25,25 +23,27 @@ const CloseIcon = () => (
   </motion.svg>
 );
 
-const Header = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure(); // Manage menu state
+const Header = ({ showActionButton = true }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Flex justify="space-between" align="center" p={4} paddingTop={"1rem"} paddingLeft={"4rem"} paddingRight={"4rem"} bg="white">
-      {/* Logo on the left */}
+      {/* Logo */}
       <Box>
         <Logo />
       </Box>
 
-      {/* Nav Links in the center */}
+      {/* Nav Links */}
       <Box display={{ base: 'none', md: 'block' }}>
         <NavLinks onClose={undefined} />
       </Box>
 
-      {/* Action Button on the right */}
-      <Box display={{ base: 'none', md: 'block' }}>
-        <ActionBtns />
-      </Box>
+      {/* Action Button */}
+      {showActionButton && (
+        <Box display={{ base: 'none', md: 'block' }}>
+          <ActionBtns />
+        </Box>
+      )}
 
       {/* Hamburger Menu for Mobile */}
       <Box display={{ base: 'block', md: 'none' }}>
@@ -52,8 +52,8 @@ const Header = () => {
           icon={
             <motion.div
               initial={{ rotate: 0 }}
-              animate={{ rotate: isOpen ? 90 : 0 }} // Fun rotation on open/close
-              transition={{ duration: 0.3 }} // Animation speed
+              animate={{ rotate: isOpen ? 90 : 0 }}
+              transition={{ duration: 0.3 }}
             >
               {isOpen ? <CloseIcon /> : <HamburgerIcon />}
             </motion.div>
@@ -65,11 +65,9 @@ const Header = () => {
         />
       </Box>
 
-      {/* Background Overlay */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Dimmed background overlay */}
             <motion.div
               key="overlay"
               initial={{ opacity: 0 }}
@@ -85,21 +83,20 @@ const Header = () => {
                 backgroundColor: "rgba(0, 0, 0, 0.5)",
                 zIndex: 10,
               }}
-              onClick={onClose} // Close the menu when clicking outside
+              onClick={onClose}
             />
 
-            {/* Half-Screen Mobile Menu - Slide in from the right */}
             <motion.div
               key="menu"
               initial={{ x: "100%" }}
-              animate={{ x: "0.5rem" }} /* Slides in to cover only half of the screen */
-              exit={{ x: "100%" }} /* Ensure it slides out smoothly */
+              animate={{ x: "0.5rem" }}
+              exit={{ x: "100%" }}
               transition={{ duration: 0.5 }}
               style={{
                 position: "fixed",
                 top: 0,
                 right: 0,
-                width: "50vw", /* Set width to half the screen */
+                width: "50vw",
                 height: "100vh",
                 backgroundColor: "white",
                 zIndex: 20,
@@ -109,16 +106,14 @@ const Header = () => {
                 alignItems: "center",
                 padding: "2rem",
                 boxShadow: "lg",
-                borderTop: "4px solid #0B2545", /* Stylish border at the top */
+                borderTop: "4px solid #0B2545",
               }}
             >
-              {/* Nav Links vertically stacked */}
               <VStack spacing={6}>
-                <NavLinks direction="column" onClose={onClose} /> {/* Stack links in mobile view */}
-                <ActionBtns /> {/* Include the action button in the mobile view */}
+                <NavLinks direction="column" onClose={onClose} />
+                {showActionButton && <ActionBtns />}
               </VStack>
 
-              {/* Close Icon positioned in top-left */}
               <IconButton
                 aria-label="Close Menu"
                 icon={<CloseIcon />}
