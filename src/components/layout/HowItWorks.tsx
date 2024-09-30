@@ -28,7 +28,7 @@ const Card = ({ title, src, text }: CardProps) => {
       initial="hidden"
       animate={inView ? "visible" : "hidden"} // Animate when the card is in view
     >
-      <Image src={src} mb={4} />
+      <Image src={src} mb={4} alt="image" />
       <Heading fontSize={["xl", "2xl", "3xl"]} mb={3}>
         {title}
       </Heading>

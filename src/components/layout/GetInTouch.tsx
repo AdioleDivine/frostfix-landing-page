@@ -3,15 +3,10 @@ import {
   Heading,
   Input,
   Button,
-  Radio,
-  RadioGroup,
-  Stack,
   Image,
   Flex,
   Text,
   VStack,
-  InputGroup,
-  InputLeftElement,
   Textarea,
   Grid,
   GridItem,
@@ -78,7 +73,7 @@ const ContactForm = () => {
         as={motion.div} // Use framer-motion to animate the grid
         initial={{ opacity: 0, y: 50 }} // Initial state: hidden and shifted down
         animate={formInView ? { opacity: 1, y: 0 } : {}} // Animate to visible and normal position when in view
-        transition={{ duration: 1, ease: "easeOut" }} // Control the duration of the animation
+        // transition={{ duration: 1, ease: "easeOut" }} // Control the duration of the animation
         templateColumns={{ base: "1fr", md: "1fr 1fr" }} // Correctly typed templateColumns
         gap={10}
       >
@@ -87,7 +82,7 @@ const ContactForm = () => {
           as={motion.div}
           initial={{ opacity: 0, x: -50 }} // Start hidden and shifted left
           animate={formInView ? { opacity: 1, x: 0 } : {}} // Animate to visible and normal position when in view
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }} // Delay slightly for staggered effect
+          // transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }} // Delay slightly for staggered effect
         >
           <VStack spacing={4} align="start">
             <Flex align="center">
@@ -172,7 +167,7 @@ const ContactForm = () => {
           as={motion.div}
           initial={{ opacity: 0, x: 50 }} // Start hidden and shifted right
           animate={formInView ? { opacity: 1, x: 0 } : {}} // Animate to visible and normal position when in view
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.6 }} // Delay staggered after the form
+          // transition={{ duration: 1.2, ease: "easeOut", delay: 0.6 }} // Delay staggered after the form
           bg="blue.900"
           borderRadius="md"
           p={8}

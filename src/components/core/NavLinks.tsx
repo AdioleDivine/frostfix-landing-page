@@ -1,6 +1,6 @@
 import { Box, Flex, Link as ChakraLink } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -11,7 +11,12 @@ const links = [
   { name: "Contact", href: "contact" },
 ];
 
-const NavLinks = ({ direction = "row", onClose }) => {
+interface NavLinksProps {
+  direction?: "row" | "column";
+  onClose?: () => void;
+}
+
+const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
   const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
 
