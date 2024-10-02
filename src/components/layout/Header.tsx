@@ -42,8 +42,6 @@ const Header = ({ showActionButton = true }) => {
             align="center"
             p={["0.75rem", "0.75rem 1rem", "0.75rem 4rem"]}
             bg="#FCFCFC"
-
-            // bg="red.400"
         >
             {/* Logo */}
             <Box>
@@ -85,6 +83,7 @@ const Header = ({ showActionButton = true }) => {
             <AnimatePresence>
                 {isOpen && (
                     <>
+                        {/* Overlay */}
                         <motion.div
                             key="overlay"
                             initial={{ opacity: 0 }}
@@ -103,18 +102,19 @@ const Header = ({ showActionButton = true }) => {
                             onClick={onClose}
                         />
 
+                        {/* Menu sliding down from top */}
                         <motion.div
                             key="menu"
-                            initial={{ x: "100%" }}
-                            animate={{ x: "0.5rem" }}
-                            exit={{ x: "100%" }}
+                            initial={{ y: "-100%" }} // Slide from top
+                            animate={{ y: "0" }} // Move to normal position
+                            exit={{ y: "-100%" }} // Slide back up when closed
                             transition={{ duration: 0.5 }}
                             style={{
                                 position: "fixed",
                                 top: 0,
-                                right: 0,
-                                width: "50vw",
-                                height: "100vh",
+                                left: 0,
+                                width: "100vw", // Full screen width
+                                height: "50vh", // Half the screen height
                                 backgroundColor: "white",
                                 zIndex: 20,
                                 display: "flex",
@@ -123,13 +123,15 @@ const Header = ({ showActionButton = true }) => {
                                 alignItems: "center",
                                 padding: "2rem",
                                 boxShadow: "lg",
-                                borderTop: "4px solid #0B2545",
+                                borderBottom: "4px solid #0B2545", // Stylish border at the bottom
                             }}
                         >
                             <VStack spacing={6}>
                                 <NavLinks
                                     direction="column"
                                     onClose={onClose}
+                                    fontSize={{ base: "xl", md: "sm" }} // Larger font size for mobile
+                                    textAlign="center" // Center-align the text
                                 />
                                 {showActionButton && <ActionBtns />}
                             </VStack>
@@ -143,7 +145,7 @@ const Header = ({ showActionButton = true }) => {
                                 transition="all 0.3s ease"
                                 position="absolute"
                                 top="20px"
-                                left="20px"
+                                right="20px" // Close button on the right
                             />
                         </motion.div>
                     </>

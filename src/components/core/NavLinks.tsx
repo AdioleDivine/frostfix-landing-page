@@ -28,7 +28,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
     return (
         <Flex direction={{ base: "column", md: direction }} gap={10}>
             {links.map((link, i) => (
-                <Box key={i}>
+                <Box key={i} textAlign={{ base: "center", md: "left" }}>  {/* Center text on mobile */}
                     {/* Use ScrollLink only on the homepage after the component is mounted */}
                     {isMounted && router.pathname === "/" ? (
                         <ScrollLink
@@ -41,7 +41,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
                             onClick={onClose}
                         >
                             <ChakraLink
-                                fontSize={"1rem"}
+                                fontSize={{ base: "1.25rem", md: "1rem" }}  // Larger font size on mobile
                                 color={"black"}
                                 fontWeight={600}
                                 position="relative"
@@ -71,9 +71,9 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
                         // Fallback to NextLink to handle full-page navigation when not on the homepage
                         <NextLink href={`/#${link.href}`} passHref>
                             <ChakraLink
-                                fontSize={"sm"}
+                                fontSize={{ base: "1.25rem", md: "1rem" }}  // Larger font size on mobile
                                 color={"black"}
-                                fontWeight={700}
+                                fontWeight={600}
                                 position="relative"
                                 _hover={{
                                     color: "blue.500",
