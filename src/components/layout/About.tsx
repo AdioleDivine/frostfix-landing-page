@@ -49,7 +49,7 @@ const AboutSection: FC = () => {
     });
 
     return (
-        <Box p={["5rem", "1rem", "1.5rem"]} bgColor={"#FCFCFC"} ref={ref}>
+        <Box p={["5rem", "2rem", "1.5rem"]} bgColor={"#FCFCFC"} ref={ref}>
             {" "}
             {/* Background color set to #FCFCFC */}
             <Grid

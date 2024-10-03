@@ -30,9 +30,9 @@ const Hero: FC = () => {
     return (
         <MotionBox
             minH={"auto"} // Adjusted minimum height for the hero section
-            pt={[10, 20]} // Padding for mobile and desktop
+            pt={[10, 5]} // Padding for mobile and desktop
             position="relative"
-            bgColor={"#FCFCFC"} // Solid white background
+            bgColor={"#FEFEFF"} // Solid white background
             initial="hidden"
             animate="visible"
             variants={containerVariants} // Apply the animation variants

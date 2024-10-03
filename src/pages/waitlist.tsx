@@ -116,7 +116,7 @@ const Waitlist: NextPage = () => {
                 bg="white"
                 display="flex"
                 justifyContent="center"
-                alignItems="center"
+                alignItems="start"
             >
                 <MotionBox
                     w="100%"
@@ -132,17 +132,25 @@ const Waitlist: NextPage = () => {
                     <MotionVStack
                         w={{ base: "100%", md: "50%" }}
                         align="start"
-                        spacing={5}
+                        spacing={6}
                         variants={formVariants}
                         initial="hidden"
                         animate="visible"
                     >
                         <Heading
                             as="h1"
-                            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
+                            fontSize={{ base: "3xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
                             color="#0B2545"
                         >
-                            Sign up to get early Access
+                            Sign up
+                        </Heading>
+
+                        <Heading
+                            as="h1"
+                            fontSize={{ base: "1xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
+                            color="#0B2545"
+                        >
+                            to get early Access
                         </Heading>
 
                         <TextInputWithIcon

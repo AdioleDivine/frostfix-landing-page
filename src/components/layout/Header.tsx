@@ -18,8 +18,8 @@ const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
         <Flex
             justify="space-between"
             align="center"
-            p={["0.75rem", "0.75rem 1rem", "0.75rem 4rem"]}
-            bg="#FCFCFC"
+            p={["0.75rem", "0.75rem 2.5rem", "0.75rem 4rem"]}
+            bg="#FEFEFF"
         >
             {/* Logo */}
             <Box>
