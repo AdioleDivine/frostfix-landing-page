@@ -1,3 +1,5 @@
+import { NextPage } from "next";
+import React, { useState } from "react";
 import {
     Box,
     Heading,
@@ -13,17 +15,60 @@ import {
     InputGroup,
     InputLeftElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Header from "../components/layout/Header"; // Import the Header
 import { motion } from "framer-motion"; // Import Framer Motion for animations
+
+import Header from "../components/layout/Header"; // Import the Header
 
 // Motion components for animations
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
-const Waitlist = () => {
-    const [value, setValue] = useState("homeowner");
+const sendEmail = async (email: string, name: string, interest: string) => {
+    // Send email logic here
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!API_URL) {
+        console.error("API URL not found");
+        return;
+    }
+
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            name,
+            interest: interest.toUpperCase(),
+        }),
+    });
+
+    if (!res.ok) {
+        console.error("Failed to send email", res.status, res.statusText);
+    }
+
+    const data = await res.json();
+    console.log("Email sent!", data);
+};
+
+const Waitlist: NextPage = () => {
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [interest, setInterest] = useState<string>("homeowner");
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length > 0) {
+            setName(e.target.value);
+        }
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length > 0) {
+            setEmail(e.target.value);
+        }
+    };
 
     // Animation variants
     const formVariants = {
@@ -130,6 +175,8 @@ const Waitlist = () => {
                                     transform: "scale(1.02)", // Slight scaling effect on focus
                                     transition: "transform 0.2s ease", // Smooth transition
                                 }}
+                                value={name} // Bind the value to the fullName state
+                                onChange={handleNameChange} // Handle input change
                             />
                         </InputGroup>
 
@@ -162,6 +209,8 @@ const Waitlist = () => {
                                     transform: "scale(1.02)", // Slight scaling effect on focus
                                     transition: "transform 0.2s ease", // Smooth transition
                                 }}
+                                value={email} // Bind the value to the fullName state
+                                onChange={handleEmailChange} // Handle input change
                             />
                         </InputGroup>
 
@@ -174,8 +223,8 @@ const Waitlist = () => {
 
                         {/* Styled Radio Buttons with transition animation */}
                         <RadioGroup
-                            onChange={setValue}
-                            value={value}
+                            onChange={setInterest}
+                            value={interest}
                             color="#0B2545"
                         >
                             <Stack direction="row" gap="2rem">
@@ -242,6 +291,7 @@ const Waitlist = () => {
                                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
                             }}
                             transition="all 0.3s ease" // Smooth transition for hover effects
+                            onClick={() => sendEmail(email, name, interest)}
                         >
                             Join
                         </Button>
