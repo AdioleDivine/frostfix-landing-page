@@ -1,3 +1,5 @@
+import Link from "next/link"; // Import the Link component from Next.js
+import { FC } from "react";
 import {
     Box,
     Center,
@@ -10,8 +12,6 @@ import {
     Image,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import React from "react";
-import Link from "next/link"; // Import the Link component from Next.js
 
 // Motion elements from framer-motion
 const MotionBox = motion(Box);
@@ -20,7 +20,7 @@ const MotionText = motion(Text);
 const MotionButton = motion(Button);
 const MotionImage = motion(Image);
 
-const Hero = () => {
+const Hero: FC = () => {
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0, x: -100 }, // Initial state: faded and slid to the left

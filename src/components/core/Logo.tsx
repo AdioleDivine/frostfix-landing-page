@@ -1,10 +1,10 @@
-import React from "react";
 import NextLink from "next/link";
+import { FC } from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 
 import { Image } from "@chakra-ui/react";
 
-const Logo = () => {
+const Logo: FC = () => {
     return (
         <NextLink href={`/#`} passHref>
             <Image

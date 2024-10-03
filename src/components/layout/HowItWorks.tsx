@@ -1,7 +1,7 @@
+import { ReactNode, FC } from "react";
+import { useInView } from "react-intersection-observer"; // For detecting when elements are in view
 import { Box, Grid, GridItem, Heading, Image, Text } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer"; // For detecting when elements are in view
-import React, { ReactNode } from "react";
 
 // MotionBox from framer-motion
 const MotionBox = motion(Box);
@@ -61,7 +61,7 @@ const works = [
     },
 ];
 
-const HowItWorks = () => {
+const HowItWorks: FC = () => {
     // Container animation for the whole section
     const containerVariants = {
         hidden: { opacity: 0 },

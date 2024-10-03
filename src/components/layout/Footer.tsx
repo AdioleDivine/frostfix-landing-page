@@ -1,3 +1,6 @@
+import { FC } from "react"; // Import the FunctionComponent
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa"; // Import the actual icons used in Get In Touch
+import { Link as ScrollLink } from "react-scroll"; // Import from react-scroll
 import {
     Box,
     Grid,
@@ -7,10 +10,8 @@ import {
     Flex,
     Icon,
 } from "@chakra-ui/react";
-import { Link as ScrollLink } from "react-scroll"; // Import from react-scroll
-import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa"; // Import the actual icons used in Get In Touch
 
-const Footer = () => {
+const Footer: FC = () => {
     return (
         <Box
             as="footer"

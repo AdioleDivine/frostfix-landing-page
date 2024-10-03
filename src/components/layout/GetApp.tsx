@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
     Box,
     Heading,
@@ -8,7 +9,7 @@ import {
     Flex,
 } from "@chakra-ui/react";
 
-const GetApp = () => {
+const GetApp: FC = () => {
     return (
         <Box
             bgImage="url('/images/GetApp.png')" // Background image path

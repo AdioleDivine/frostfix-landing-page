@@ -1,11 +1,11 @@
-import { Box, Flex, Link as ChakraLink } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { Link as ScrollLink } from "react-scroll";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState, FC } from "react";
+import { Link as ScrollLink } from "react-scroll";
+import { Box, Flex, Link as ChakraLink } from "@chakra-ui/react";
 
 const links = [
-    { name: "Home", href: "hero" },
+    { name: "Home", href: "home" },
     { name: "About", href: "about" },
     { name: "Features", href: "features" },
     { name: "Contact", href: "contact" },
@@ -16,7 +16,7 @@ interface NavLinksProps {
     onClose?: () => void;
 }
 
-const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
+const NavLinks: FC<NavLinksProps> = ({ direction = "row", onClose }) => {
     const router = useRouter();
     const [isMounted, setIsMounted] = useState(false);
 
@@ -28,7 +28,9 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
     return (
         <Flex direction={{ base: "column", md: direction }} gap={10}>
             {links.map((link, i) => (
-                <Box key={i} textAlign={{ base: "center", md: "left" }}>  {/* Center text on mobile */}
+                <Box key={i} textAlign={{ base: "center", md: "left" }}>
+                    {" "}
+                    {/* Center text on mobile */}
                     {/* Use ScrollLink only on the homepage after the component is mounted */}
                     {isMounted && router.pathname === "/" ? (
                         <ScrollLink
@@ -41,8 +43,10 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
                             onClick={onClose}
                         >
                             <ChakraLink
-                                fontSize={{ base: "1.25rem", md: "1rem" }}  // Larger font size on mobile
+                                fontSize={{ base: "1.25rem", md: "1rem" }} // Larger font size on mobile
                                 color={"black"}
+                                // fontSize={{ base: "xl", md: "sm" }} // Larger font size for mobile
+                                textAlign="center" // Center-align the text
                                 fontWeight={600}
                                 position="relative"
                                 _hover={{
@@ -71,7 +75,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ direction = "row", onClose }) => {
                         // Fallback to NextLink to handle full-page navigation when not on the homepage
                         <NextLink href={`/#${link.href}`} passHref>
                             <ChakraLink
-                                fontSize={{ base: "1.25rem", md: "1rem" }}  // Larger font size on mobile
+                                fontSize={{ base: "1.25rem", md: "1rem" }} // Larger font size on mobile
                                 color={"black"}
                                 fontWeight={600}
                                 position="relative"

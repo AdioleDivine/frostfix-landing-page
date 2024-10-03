@@ -1,3 +1,5 @@
+import { ReactNode, FC } from "react";
+import { useInView } from "react-intersection-observer";
 import {
     Box,
     Grid,
@@ -9,8 +11,6 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { ReactNode } from "react";
 
 // MotionBox with Framer Motion for animations
 const MotionBox = motion(Box);
@@ -22,7 +22,7 @@ interface FeatureCardProps {
     icon: string; // Path to the icon as a string
 }
 
-const FeatureCard = ({ title, text, icon }: FeatureCardProps) => {
+const FeatureCard: FC<FeatureCardProps> = ({ title, text, icon }) => {
     return (
         <Flex gap={3} align="flex-start" direction="row">
             <Image src={icon} alt={title} boxSize="40px" />{" "}
@@ -44,7 +44,7 @@ const FeatureCard = ({ title, text, icon }: FeatureCardProps) => {
 };
 
 // Features Component with Animation
-const Features = () => {
+const Features: FC = () => {
     const [ref, inView] = useInView({
         triggerOnce: true, // Animation only runs once
         threshold: 0.2, // Trigger when 20% of the component is visible
