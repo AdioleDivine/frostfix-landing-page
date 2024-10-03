@@ -1,7 +1,8 @@
+import { NextPage } from "next";
+import React, { useState, ChangeEvent } from "react";
 import {
     Box,
     Heading,
-    Input,
     Button,
     Radio,
     RadioGroup,
@@ -10,20 +11,63 @@ import {
     Flex,
     Text,
     VStack,
-    InputGroup,
-    InputLeftElement,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Header from "../components/layout/Header"; // Import the Header
 import { motion } from "framer-motion"; // Import Framer Motion for animations
+
+import Header from "../components/layout/Header"; // Import the Header
+import TextInputWithIcon from "../components/core/TextInputWithIcon"; // Import the TextInputWithIcon component
 
 // Motion components for animations
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
-const Waitlist = () => {
-    const [value, setValue] = useState("homeowner");
+const sendEmail = async (email: string, name: string, interest: string) => {
+    // Send email logic here
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    if (!API_URL) {
+        console.error("API URL not found");
+        return;
+    }
+
+    const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            name,
+            interest: interest.toUpperCase(),
+        }),
+    });
+
+    if (!res.ok) {
+        console.error("Failed to send email", res.status, res.statusText);
+    }
+
+    const data = await res.json();
+    console.log("Email sent!", data);
+};
+
+const Waitlist: NextPage = () => {
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [interest, setInterest] = useState<string>("homeowner");
+
+    // setState functions
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length > 0) {
+            setName(e.target.value);
+        }
+    };
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value.length > 0) {
+            setEmail(e.target.value);
+        }
+    };
 
     // Animation variants
     const formVariants = {
@@ -101,81 +145,33 @@ const Waitlist = () => {
                             Sign up to get early Access
                         </Heading>
 
-                        {/* Input Group with Icon for Full Name */}
-                        <InputGroup>
-                            <InputLeftElement
-                                pointerEvents="none"
-                                height="100%" // Ensures the icon height matches the input
-                                display="flex"
-                                alignItems="center" // Vertically center the icon
-                            >
-                                <Image
-                                    src="/images/solar_user-linear.svg"
-                                    alt="user icon"
-                                    boxSize={6}
-                                />
-                            </InputLeftElement>
-                            <Input
-                                borderRadius={"0.8rem"}
-                                placeholder="Full Name"
-                                size="lg"
-                                w="100%"
-                                color="black" // Ensure text inside the input is visible
-                                _placeholder={{ color: "#A0AEC0" }} // Lighter color for the placeholder
-                                _hover={{
-                                    borderColor: "blue.500", // Frosty blue border on hover
-                                }}
-                                _focus={{
-                                    borderColor: "blue.900", // Dark blue on focus
-                                    transform: "scale(1.02)", // Slight scaling effect on focus
-                                    transition: "transform 0.2s ease", // Smooth transition
-                                }}
-                            />
-                        </InputGroup>
+                        <TextInputWithIcon
+                            imageSrc="/images/solar_user-linear.svg"
+                            imageAlt="user icon"
+                            placeholder="Full Name"
+                            value={name}
+                            handleValueChange={handleNameChange}
+                        />
 
-                        {/* Input Group with Icon for Email Address */}
-                        <InputGroup>
-                            <InputLeftElement
-                                pointerEvents="none"
-                                height="100%" // Ensures the icon height matches the input
-                                display="flex"
-                                alignItems="center" // Vertically center the icon
-                            >
-                                <Image
-                                    src="/images/mdi-light_email.svg"
-                                    alt="email icon"
-                                    boxSize={6}
-                                />
-                            </InputLeftElement>
-                            <Input
-                                placeholder="Email Address"
-                                borderRadius={"0.8rem"}
-                                size="lg"
-                                w="100%"
-                                color="black" // Ensure text inside the input is visible
-                                _placeholder={{ color: "#A0AEC0" }} // Lighter color for the placeholder
-                                _hover={{
-                                    borderColor: "blue.500", // Frosty blue border on hover
-                                }}
-                                _focus={{
-                                    borderColor: "blue.900", // Dark blue on focus
-                                    transform: "scale(1.02)", // Slight scaling effect on focus
-                                    transition: "transform 0.2s ease", // Smooth transition
-                                }}
-                            />
-                        </InputGroup>
+                        <TextInputWithIcon
+                            imageSrc="/images/mdi-light_email.svg"
+                            imageAlt="email icon"
+                            placeholder="Email Address"
+                            value={email}
+                            handleValueChange={handleEmailChange}
+                        />
 
                         <Text
                             fontSize={{ base: "md", md: "lg", lg: "xl" }} // Adjust the text size responsively
                             color="#0B2545"
                         >
-                            Signing up as a
+                            I'm interested in joining as a
                         </Text>
 
                         {/* Styled Radio Buttons with transition animation */}
                         <RadioGroup
-                            onChange={setValue}
-                            value={value}
+                            onChange={setInterest}
+                            value={interest}
                             color="#0B2545"
                         >
                             <Stack direction="row" gap="2rem">
@@ -242,6 +238,7 @@ const Waitlist = () => {
                                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
                             }}
                             transition="all 0.3s ease" // Smooth transition for hover effects
+                            onClick={() => sendEmail(email, name, interest)}
                         >
                             Join
                         </Button>

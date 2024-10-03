@@ -1,3 +1,6 @@
+import { FC } from "react";
+import { useInView } from "react-intersection-observer"; // Import useInView for scroll detection
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import {
     Box,
     Heading,
@@ -13,50 +16,11 @@ import {
     Icon,
     Link,
 } from "@chakra-ui/react";
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion"; // Import framer-motion
-import { useInView } from "react-intersection-observer"; // Import useInView for scroll detection
-import React from "react";
 
-// Custom Icon (Mail Icon)
-const MailIcon = () => (
-    <Icon viewBox="0 0 22 19" boxSize={6}>
-        <path
-            d="M1,6C1,2.5,3,1,6,1h10c3,0,5,1.5,5,5v7c0,3.5-2,5-5,5H6"
-            stroke="#0b2545"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            fill="none"
-        />
-        <path
-            d="M16,6.5l-3.1,2.5c-1,.8-2.7,.8-3.8,0l-3.1-2.5"
-            stroke="#0b2545"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            fill="none"
-        />
-        <path
-            d="M1,14h6"
-            stroke="#0b2545"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            fill="none"
-        />
-        <path
-            d="M1,10h3"
-            stroke="#0b2545"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            fill="none"
-        />
-    </Icon>
-);
+import { MailIcon } from "../core/Icons";
 
-const ContactForm = () => {
+const ContactForm: FC = () => {
     // Set up the scroll detection for animation triggers
     const { ref: formRef, inView: formInView } = useInView({
         triggerOnce: true, // Only trigger once when the user scrolls to it

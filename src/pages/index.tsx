@@ -1,3 +1,7 @@
+import { NextPage } from "next";
+import Head from "next/head";
+import { Box } from "@chakra-ui/react";
+
 import Header from "@/components/layout/Header";
 import Hero from "@/components/layout/Hero";
 import HowItWorks from "@/components/layout/HowItWorks";
@@ -7,10 +11,7 @@ import GetInTouch from "@/components/layout/GetInTouch";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/core/scrollToTop"; // Import ScrollToTop component
 
-import { Box } from "@chakra-ui/react";
-import Head from "next/head";
-
-export default function Home() {
+const Home: NextPage = () => {
     return (
         <>
             <Head>
@@ -23,7 +24,7 @@ export default function Home() {
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
             </Head>
 
             {/* Wrapping the whole content in a Box with a snow background */}
@@ -57,4 +58,6 @@ export default function Home() {
             </Box>
         </>
     );
-}
+};
+
+export default Home;
