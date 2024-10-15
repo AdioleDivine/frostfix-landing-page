@@ -32,46 +32,33 @@ const sendEmail = async (
     interest: string,
     promotionalEmails: boolean
 ) => {
-    try {
-        // Send email logic here
-        const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email,
+            name,
+            interest: interest.toUpperCase(),
+            promotionalEmails,
+        }),
+    });
 
-        if (!API_URL) {
-            throw new Error("API_URL is not set");
-        }
+    const data = await res.json();
 
-        const res = await fetch(`${API_URL}/waitlist`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                name,
-                interest: interest.toUpperCase(),
-                promotionalEmails,
-            }),
-        });
-
-        // if there's an error with the request (e.g. 404, 500), throw an error
-        if (res.status === 404 || res.status === 500) {
-            throw new Error("Something went wrong. Please try again later.");
-        }
-
-        const data = await res.json();
-        console.log("Data", data);
-
-        if (data.error) {
-            throw new Error(data.error.message);
-        } else {
-            console.log("Data", data);
-
-            return { type: "success", message: "Email was sent successfully" };
-        }
-    } catch (error: any) {
-        console.error("Error", error.message);
-        return { type: "error", message: error.message };
+    if (data.error) {
+        return { type: "error", message: data.error };
     }
+
+    if (!res.ok) {
+        return {
+            type: "warning",
+            message: "Something went wrong. Please try again later.",
+        };
+    }
+
+    return { type: "success", message: "Email was sent successfully" };
 };
 
 const Waitlist: NextPage = () => {

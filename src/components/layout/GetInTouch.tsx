@@ -23,40 +23,32 @@ import { MailIcon } from "../core/Icons";
 import { showToast } from "../core/Toast";
 
 const sendEmail = async (fullName: string, email: string, message: string) => {
-    try {
-        // Send email logic here
-        const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`/api/contact`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            fullName,
+            email,
+            message,
+        }),
+    });
 
-        if (!API_URL) {
-            throw new Error("API_URL is not set");
-        }
+    const data = await res.json();
 
-        const res = await fetch(`${API_URL}/contact`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                fullName,
-                email,
-                message,
-            }),
-        });
-
-        console.log(res);
-
-        if (!res.ok) {
-            throw new Error("Failed to send email");
-        }
-
-        const data = await res.json();
-        console.log(data);
-
-        return { type: "success", message: "Email was sent successfully" };
-    } catch (error) {
-        console.error("Error:", error);
-        return { type: "error", message: "Failed to send email" };
+    if (data.error) {
+        return { type: "error", message: data.error };
     }
+
+    if (!res.ok) {
+        return {
+            type: "error",
+            message: "Something went wrong. Please try again later.",
+        };
+    }
+
+    return { type: "success", message: "Email was sent successfully" };
 };
 
 const ContactForm: FC = () => {
