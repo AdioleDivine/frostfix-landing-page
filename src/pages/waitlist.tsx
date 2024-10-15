@@ -1,3 +1,5 @@
+import { NextPage } from "next";
+import React, { useState, ChangeEvent } from "react";
 import {
     Box,
     Heading,
@@ -12,7 +14,7 @@ import {
     Checkbox,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import Framer Motion for animations
-import React, { useState, ChangeEvent } from "react";
+
 import Header from "../components/layout/Header"; // Import the Header
 import TextInputWithIcon from "../components/core/TextInputWithIcon"; // Import the TextInputWithIcon component
 
@@ -21,7 +23,12 @@ const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
-const sendEmail = async (email: string, name: string, interest: string) => {
+const sendEmail = async (
+    email: string,
+    name: string,
+    interest: string,
+    promotionalEmails: boolean
+) => {
     // Send email logic here
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,7 +37,7 @@ const sendEmail = async (email: string, name: string, interest: string) => {
         return;
     }
 
-    const res = await fetch(API_URL, {
+    const res = await fetch(`${API_URL}/waitlist`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -39,6 +46,7 @@ const sendEmail = async (email: string, name: string, interest: string) => {
             email,
             name,
             interest: interest.toUpperCase(),
+            promotionalEmails,
         }),
     });
 
@@ -54,15 +62,19 @@ const Waitlist: NextPage = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
-    const [promoEmails, setPromoEmails] = useState(false); // State for promotional emails
+    const [promotionalEmails, setPromotionalEmails] = useState(false); // State for promotional emails
 
     // setState functions
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
+        if (e.target.value.length > 0) {
+            setName(e.target.value);
+        }
     };
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+        if (e.target.value.length > 0) {
+            setEmail(e.target.value);
+        }
     };
 
     // Animation variants
@@ -94,7 +106,8 @@ const Waitlist: NextPage = () => {
         <>
             {/* Header */}
             <Box as="header">
-                <Header showActionButton={false} /> {/* Use Header without the action button */}
+                <Header showActionButton={false} />{" "}
+                {/* Use Header without the action button */}
             </Box>
 
             {/* Background */}
@@ -140,7 +153,7 @@ const Waitlist: NextPage = () => {
                     >
                         <Heading
                             as="h1"
-                            fontSize={{ base: "3xl", md: "3xl", lg: "4xl" }}
+                            fontSize={{ base: "3xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
                             color="#0B2545"
                         >
                             Sign up to get early Access
@@ -237,9 +250,9 @@ const Waitlist: NextPage = () => {
                             mt={4}
                         >
                             <Checkbox
-                                isChecked={promoEmails}
+                                isChecked={promotionalEmails}
                                 onChange={(e) =>
-                                    setPromoEmails(e.target.checked)
+                                    setPromotionalEmails(e.target.checked)
                                 }
                                 size="lg"
                                 colorScheme="blue"
@@ -279,7 +292,14 @@ const Waitlist: NextPage = () => {
                                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
                             }}
                             transition="all 0.3s ease"
-                            onClick={() => sendEmail(email, name, interest)}
+                            onClick={() =>
+                                sendEmail(
+                                    email,
+                                    name,
+                                    interest,
+                                    promotionalEmails
+                                )
+                            }
                         >
                             Join
                         </Button>
