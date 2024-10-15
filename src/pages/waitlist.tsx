@@ -1,5 +1,3 @@
-import { NextPage } from "next";
-import React, { useState, ChangeEvent } from "react";
 import {
     Box,
     Heading,
@@ -11,9 +9,10 @@ import {
     Flex,
     Text,
     VStack,
+    Checkbox,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import Framer Motion for animations
-
+import React, { useState, ChangeEvent } from "react";
 import Header from "../components/layout/Header"; // Import the Header
 import TextInputWithIcon from "../components/core/TextInputWithIcon"; // Import the TextInputWithIcon component
 
@@ -55,18 +54,15 @@ const Waitlist: NextPage = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
+    const [promoEmails, setPromoEmails] = useState(false); // State for promotional emails
 
     // setState functions
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setName(e.target.value);
-        }
+        setName(e.target.value);
     };
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setEmail(e.target.value);
-        }
+        setEmail(e.target.value);
     };
 
     // Animation variants
@@ -89,27 +85,32 @@ const Waitlist: NextPage = () => {
         },
     };
 
+    const checkboxVariants = {
+        hover: { scale: 1.1 },
+        tap: { scale: 0.95 },
+    };
+
     return (
         <>
-            {/* Header with background color changed to #FCFCFC */}
+            {/* Header */}
             <Box as="header">
-                <Header showActionButton={false} />{" "}
-                {/* Use Header without the action button */}
+                <Header showActionButton={false} /> {/* Use Header without the action button */}
             </Box>
 
-            {/* Snowflake Background */}
+            {/* Background */}
             <Box
                 position="absolute"
                 top={0}
                 left={0}
                 width="100vw"
                 height="100vh"
-                backgroundImage="url('/images/snow.jpg')" // Replace with actual snowflake background image
+                backgroundImage="url('/images/snow.jpg')" // Replace with actual background image
                 backgroundSize="cover"
-                opacity={0.05} // Light opacity for subtle effect
+                opacity={0.05}
                 zIndex={-1}
             />
 
+            {/* Form Section */}
             <Box
                 minH="100vh"
                 p={[6, 10, 20]}
@@ -124,11 +125,11 @@ const Waitlist: NextPage = () => {
                     display="flex"
                     alignItems="center"
                     flexDirection={{ base: "column", md: "row" }}
-                    gap={{ base: 10, md: 0 }} // Adds gap between form and image on mobile
+                    gap={{ base: 10, md: 0 }}
                     initial="hidden"
                     animate="visible"
                 >
-                    {/* Left Section: Form with animation */}
+                    {/* Left Section: Form */}
                     <MotionVStack
                         w={{ base: "100%", md: "50%" }}
                         align="start"
@@ -139,20 +140,13 @@ const Waitlist: NextPage = () => {
                     >
                         <Heading
                             as="h1"
-                            fontSize={{ base: "3xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
+                            fontSize={{ base: "3xl", md: "3xl", lg: "4xl" }}
                             color="#0B2545"
                         >
-                            Sign up
+                            Sign up to get early Access
                         </Heading>
 
-                        <Heading
-                            as="h1"
-                            fontSize={{ base: "1xl", md: "3xl", lg: "4xl" }} // Responsive font size for all devices
-                            color="#0B2545"
-                        >
-                            to get early Access
-                        </Heading>
-
+                        {/* Name Input */}
                         <TextInputWithIcon
                             imageSrc="/images/solar_user-linear.svg"
                             imageAlt="user icon"
@@ -161,6 +155,7 @@ const Waitlist: NextPage = () => {
                             handleValueChange={handleNameChange}
                         />
 
+                        {/* Email Input */}
                         <TextInputWithIcon
                             imageSrc="/images/mdi-light_email.svg"
                             imageAlt="email icon"
@@ -170,13 +165,13 @@ const Waitlist: NextPage = () => {
                         />
 
                         <Text
-                            fontSize={{ base: "md", md: "lg", lg: "xl" }} // Adjust the text size responsively
+                            fontSize={{ base: "md", md: "lg", lg: "xl" }}
                             color="#0B2545"
                         >
                             I&apos;m interested in joining as a
                         </Text>
 
-                        {/* Styled Radio Buttons with transition animation */}
+                        {/* Radio Buttons */}
                         <RadioGroup
                             onChange={setInterest}
                             value={interest}
@@ -192,15 +187,15 @@ const Waitlist: NextPage = () => {
                                 >
                                     <Radio
                                         value="contractor"
-                                        size="lg" // Larger radio button
+                                        size="lg"
                                         _hover={{
-                                            borderColor: "blue.500", // Hover color for radio
-                                            transition: "all 0.3s ease", // Smooth hover transition
+                                            borderColor: "blue.500",
+                                            transition: "all 0.3s ease",
                                         }}
                                         _checked={{
-                                            bg: "blue.900", // Dark blue fill when checked
-                                            color: "white", // White checkmark when selected
-                                            borderColor: "blue.900", // Border matches the dark blue fill
+                                            bg: "blue.900",
+                                            color: "white",
+                                            borderColor: "blue.900",
                                         }}
                                     >
                                         Contractor
@@ -215,15 +210,15 @@ const Waitlist: NextPage = () => {
                                 >
                                     <Radio
                                         value="homeowner"
-                                        size="lg" // Larger radio button
+                                        size="lg"
                                         _hover={{
-                                            borderColor: "blue.500", // Hover color for radio
-                                            transition: "all 0.3s ease", // Smooth hover transition
+                                            borderColor: "blue.500",
+                                            transition: "all 0.3s ease",
                                         }}
                                         _checked={{
-                                            bg: "blue.900", // Dark blue fill when checked
-                                            color: "white", // White checkmark when selected
-                                            borderColor: "blue.900", // Border matches the dark blue fill
+                                            bg: "blue.900",
+                                            color: "white",
+                                            borderColor: "blue.900",
                                         }}
                                     >
                                         Homeowner
@@ -232,32 +227,70 @@ const Waitlist: NextPage = () => {
                             </Stack>
                         </RadioGroup>
 
-                        {/* Join Button with Hover Effect */}
+                        {/* Promotional Emails Checkbox */}
+                        <MotionBox
+                            whileHover="hover"
+                            whileTap="tap"
+                            variants={checkboxVariants}
+                            initial="hidden"
+                            animate="visible"
+                            mt={4}
+                        >
+                            <Checkbox
+                                isChecked={promoEmails}
+                                onChange={(e) =>
+                                    setPromoEmails(e.target.checked)
+                                }
+                                size="lg"
+                                colorScheme="blue"
+                                _hover={{
+                                    borderColor: "blue.500",
+                                }}
+                                _focus={{
+                                    borderColor: "blue.900",
+                                    transform: "scale(1.02)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                            >
+                                <Text
+                                    fontSize={{
+                                        base: "md",
+                                        md: "lg",
+                                        lg: "xl",
+                                    }}
+                                    color="black"
+                                >
+                                    Sign up to receive promotional emails
+                                </Text>
+                            </Checkbox>
+                        </MotionBox>
+
+                        {/* Join Button */}
                         <Button
                             bg="blue.900"
                             color="white"
                             size="lg"
                             padding={"2rem"}
                             borderRadius={"1rem"}
-                            w="100%" // Set width to match inputs
+                            w="100%"
                             _hover={{
-                                backgroundColor: "#123a6b", // Lighter shade on hover
-                                transform: "scale(1.05)", // Slightly enlarge the button
-                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
+                                backgroundColor: "#123a6b",
+                                transform: "scale(1.05)",
+                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
                             }}
-                            transition="all 0.3s ease" // Smooth transition for hover effects
+                            transition="all 0.3s ease"
                             onClick={() => sendEmail(email, name, interest)}
                         >
                             Join
                         </Button>
                     </MotionVStack>
 
-                    {/* Right Section: Image (Hide on Mobile) */}
+                    {/* Right Section: Image */}
                     <MotionFlex
                         w={{ base: "100%", md: "50%" }}
                         justify="center"
-                        display={{ base: "none", md: "flex" }} // Hide image on mobile
-                        variants={imageVariants} // Add animation to image
+                        display={{ base: "none", md: "flex" }}
+                        variants={imageVariants}
                         initial="hidden"
                         animate="visible"
                     >
