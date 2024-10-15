@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useInView } from "react-intersection-observer"; // Import useInView for scroll detection
+import { useInView } from "react-intersection-observer";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import {
     Box,
@@ -15,41 +15,53 @@ import {
     GridItem,
     Icon,
     Link,
+    useToast,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import framer-motion
 
 import { MailIcon } from "../core/Icons";
+import { showToast } from "../core/Toast";
 
 const sendEmail = async (fullName: string, email: string, message: string) => {
-    // Send email logic here
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    try {
+        // Send email logic here
+        const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    if (!API_URL) {
-        console.error("API URL not found");
-        return;
+        if (!API_URL) {
+            throw new Error("API_URL is not set");
+        }
+
+        const res = await fetch(`${API_URL}/contact`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                fullName,
+                email,
+                message,
+            }),
+        });
+
+        console.log(res);
+
+        if (!res.ok) {
+            throw new Error("Failed to send email");
+        }
+
+        const data = await res.json();
+        console.log(data);
+
+        return { type: "success", message: "Email was sent successfully" };
+    } catch (error) {
+        console.error("Error:", error);
+        return { type: "error", message: "Failed to send email" };
     }
-
-    const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fullName,
-            email,
-            message,
-        }),
-    });
-
-    if (!res.ok) {
-        console.error("Failed to send email", res.status, res.statusText);
-    }
-
-    const data = await res.json();
-    console.log("Email sent!", data);
 };
 
 const ContactForm: FC = () => {
+    const toast = useToast();
+
     const [fullName, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
@@ -186,7 +198,27 @@ const ContactForm: FC = () => {
                                 transform: "scale(1.05)", // Slightly enlarge the button
                                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
                             }}
-                            onClick={() => sendEmail(fullName, email, message)}
+                            onClick={async () => {
+                                const status = await sendEmail(
+                                    fullName,
+                                    email,
+                                    message
+                                );
+
+                                if (status.type === "success") {
+                                    showToast(toast, status.message, "success");
+
+                                    setFullName("");
+                                    setEmail("");
+                                    setMessage("");
+                                } else if (status.type === "error") {
+                                    showToast(toast, status.message, "error");
+                                } else if (status.type === "warning") {
+                                    showToast(toast, status.message, "warning");
+                                } else {
+                                    showToast(toast, status.message, "info");
+                                }
+                            }}
                         >
                             Submit
                         </Button>

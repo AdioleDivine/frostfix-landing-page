@@ -12,11 +12,14 @@ import {
     Text,
     VStack,
     Checkbox,
+    useToast,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion"; // Import Framer Motion for animations
+import { motion } from "framer-motion";
 
-import Header from "../components/layout/Header"; // Import the Header
-import TextInputWithIcon from "../components/core/TextInputWithIcon"; // Import the TextInputWithIcon component
+import { showToast } from "../components/core/Toast";
+
+import Header from "../components/layout/Header";
+import TextInputWithIcon from "../components/core/TextInputWithIcon";
 
 // Motion components for animations
 const MotionBox = motion(Box);
@@ -29,36 +32,51 @@ const sendEmail = async (
     interest: string,
     promotionalEmails: boolean
 ) => {
-    // Send email logic here
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    try {
+        // Send email logic here
+        const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-    if (!API_URL) {
-        console.error("API URL not found");
-        return;
+        if (!API_URL) {
+            throw new Error("API_URL is not set");
+        }
+
+        const res = await fetch(`${API_URL}/waitlist`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                name,
+                interest: interest.toUpperCase(),
+                promotionalEmails,
+            }),
+        });
+
+        // if there's an error with the request (e.g. 404, 500), throw an error
+        if (res.status === 404 || res.status === 500) {
+            throw new Error("Something went wrong. Please try again later.");
+        }
+
+        const data = await res.json();
+        console.log("Data", data);
+
+        if (data.error) {
+            throw new Error(data.error.message);
+        } else {
+            console.log("Data", data);
+
+            return { type: "success", message: "Email was sent successfully" };
+        }
+    } catch (error: any) {
+        console.error("Error", error.message);
+        return { type: "error", message: error.message };
     }
-
-    const res = await fetch(`${API_URL}/waitlist`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email,
-            name,
-            interest: interest.toUpperCase(),
-            promotionalEmails,
-        }),
-    });
-
-    if (!res.ok) {
-        console.error("Failed to send email", res.status, res.statusText);
-    }
-
-    const data = await res.json();
-    console.log("Email sent!", data);
 };
 
 const Waitlist: NextPage = () => {
+    const toast = useToast();
+
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
@@ -199,29 +217,6 @@ const Waitlist: NextPage = () => {
                                     animate="visible"
                                 >
                                     <Radio
-                                        value="contractor"
-                                        size="lg"
-                                        _hover={{
-                                            borderColor: "blue.500",
-                                            transition: "all 0.3s ease",
-                                        }}
-                                        _checked={{
-                                            bg: "blue.900",
-                                            color: "white",
-                                            borderColor: "blue.900",
-                                        }}
-                                    >
-                                        Contractor
-                                    </Radio>
-                                </MotionBox>
-                                <MotionBox
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    variants={radioVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                >
-                                    <Radio
                                         value="homeowner"
                                         size="lg"
                                         _hover={{
@@ -235,6 +230,29 @@ const Waitlist: NextPage = () => {
                                         }}
                                     >
                                         Homeowner
+                                    </Radio>
+                                </MotionBox>
+                                <MotionBox
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    variants={radioVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                >
+                                    <Radio
+                                        value="contractor"
+                                        size="lg"
+                                        _hover={{
+                                            borderColor: "blue.500",
+                                            transition: "all 0.3s ease",
+                                        }}
+                                        _checked={{
+                                            bg: "blue.900",
+                                            color: "white",
+                                            borderColor: "blue.900",
+                                        }}
+                                    >
+                                        Contractor
                                     </Radio>
                                 </MotionBox>
                             </Stack>
@@ -292,14 +310,29 @@ const Waitlist: NextPage = () => {
                                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
                             }}
                             transition="all 0.3s ease"
-                            onClick={() =>
-                                sendEmail(
+                            onClick={async () => {
+                                const status = await sendEmail(
                                     email,
                                     name,
                                     interest,
                                     promotionalEmails
-                                )
-                            }
+                                );
+
+                                if (status.type === "success") {
+                                    showToast(toast, status.message, "success");
+
+                                    setName("");
+                                    setEmail("");
+                                    setInterest("homeowner");
+                                    setPromotionalEmails(false);
+                                } else if (status.type === "error") {
+                                    showToast(toast, status.message, "error");
+                                } else if (status.type === "warning") {
+                                    showToast(toast, status.message, "warning");
+                                } else {
+                                    showToast(toast, status.message, "info");
+                                }
+                            }}
                         >
                             Join
                         </Button>
