@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import Logo from "../core/Logo";
 import NavLinks from "../core/NavLinks";
-import ActionBtns from "../core/ActionBtns"; // The early access button
+import { ActionButton } from "../core/Buttons"; // The early access button
 import { HamburgerIcon, CloseIcon } from "../core/Icons";
 
 interface HeaderProps {
@@ -34,7 +34,7 @@ const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
             {/* Action Button */}
             {showActionButton && (
                 <Box display={{ base: "none", md: "block" }}>
-                    <ActionBtns />
+                    <ActionButton />
                 </Box>
             )}
 
@@ -109,7 +109,7 @@ const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
                                     direction="column"
                                     onClose={onClose}
                                 />
-                                {showActionButton && <ActionBtns />}
+                                {showActionButton && <ActionButton />}
                             </VStack>
 
                             <IconButton
