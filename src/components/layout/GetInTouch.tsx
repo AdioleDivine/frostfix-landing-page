@@ -5,7 +5,6 @@ import {
     Box,
     Heading,
     Input,
-    Button,
     Image,
     Flex,
     Text,
@@ -15,48 +14,22 @@ import {
     GridItem,
     Icon,
     Link,
-    useToast,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import framer-motion
 
 import { MailIcon } from "../core/Icons";
-import { showToast } from "../core/Toast";
-
-const sendEmail = async (fullName: string, email: string, message: string) => {
-    const res = await fetch(`/api/contact`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fullName,
-            email,
-            message,
-        }),
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-        return { type: "error", message: data.error };
-    }
-
-    if (!res.ok) {
-        return {
-            type: "error",
-            message: "Something went wrong. Please try again later.",
-        };
-    }
-
-    return { type: "success", message: "Email was sent successfully" };
-};
+import { SubmitButton } from "../core/Buttons";
 
 const ContactForm: FC = () => {
-    const toast = useToast();
-
     const [fullName, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+
+    const inputData = {
+        fullName,
+        email,
+        message,
+    };
 
     // Set up the scroll detection for animation triggers
     const { ref: formRef, inView: formInView } = useInView({
@@ -133,7 +106,7 @@ const ContactForm: FC = () => {
                                 transition: "transform 0.2s ease", // Smooth transition
                             }}
                             value={fullName}
-                            onChange={handleFullNameChange}
+                            onChange={(e) => setFullName(e.target.value)}
                         />
 
                         {/* Email Address Input */}
@@ -153,7 +126,7 @@ const ContactForm: FC = () => {
                                 transition: "transform 0.2s ease", // Smooth transition
                             }}
                             value={email}
-                            onChange={handleEmailChange}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
 
                         {/* Description Textarea */}
@@ -173,47 +146,14 @@ const ContactForm: FC = () => {
                                 transition: "transform 0.2s ease", // Smooth transition
                             }}
                             value={message}
-                            onChange={handleMessageChange}
+                            onChange={(e) => setMessage(e.target.value)}
                         />
 
                         {/* Submit Button with hover animation */}
-                        <Button
-                            bg="blue.900"
-                            color="white"
-                            size="lg"
-                            borderRadius="md"
-                            width="fit-content"
-                            transition="all 0.3s ease" // Smooth transition for hover effects
-                            _hover={{
-                                backgroundColor: "#123a6b", // Change the background on hover
-                                color: "#ffffff", // Keep the text color white
-                                transform: "scale(1.05)", // Slightly enlarge the button
-                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
-                            }}
-                            onClick={async () => {
-                                const status = await sendEmail(
-                                    fullName,
-                                    email,
-                                    message
-                                );
-
-                                if (status.type === "success") {
-                                    showToast(toast, status.message, "success");
-
-                                    setFullName("");
-                                    setEmail("");
-                                    setMessage("");
-                                } else if (status.type === "error") {
-                                    showToast(toast, status.message, "error");
-                                } else if (status.type === "warning") {
-                                    showToast(toast, status.message, "warning");
-                                } else {
-                                    showToast(toast, status.message, "info");
-                                }
-                            }}
-                        >
-                            Submit
-                        </Button>
+                        <SubmitButton
+                            endpoint="contact"
+                            inputData={inputData}
+                        />
                     </VStack>
                 </GridItem>
 

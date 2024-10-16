@@ -1,9 +1,8 @@
 import { NextPage } from "next";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useMemo, ChangeEvent } from "react";
 import {
     Box,
     Heading,
-    Button,
     Radio,
     RadioGroup,
     Stack,
@@ -12,11 +11,10 @@ import {
     Text,
     VStack,
     Checkbox,
-    useToast,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
-import { showToast } from "../components/core/Toast";
+import { SubmitButton } from "../components/core/Buttons";
 
 import Header from "../components/layout/Header";
 import TextInputWithIcon from "../components/core/TextInputWithIcon";
@@ -26,61 +24,26 @@ const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
-const sendEmail = async (
-    email: string,
-    name: string,
-    interest: string,
-    promotionalEmails: boolean
-) => {
-    const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email,
-            name,
-            interest: interest.toUpperCase(),
-            promotionalEmails,
-        }),
-    });
-
-    const data = await res.json();
-
-    if (data.error) {
-        return { type: "error", message: data.error };
-    }
-
-    if (!res.ok) {
-        return {
-            type: "warning",
-            message: "Something went wrong. Please try again later.",
-        };
-    }
-
-    return { type: "success", message: "Email was sent successfully" };
-};
-
 const Waitlist: NextPage = () => {
-    const toast = useToast();
-
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
     const [promotionalEmails, setPromotionalEmails] = useState(false); // State for promotional emails
 
-    // setState functions
-    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setName(e.target.value);
-        }
-    };
+    const inputData = useMemo(
+        () => ({
+            name,
+            email,
+            interest: interest.toUpperCase(),
+            promotionalEmails,
+        }),
+        [name, email, interest, promotionalEmails]
+    );
 
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setEmail(e.target.value);
-        }
-    };
+    // Memoize endpoint if it is dynamic
+    const endpoint = useMemo(() => {
+        return "waitlist";
+    }, []);
 
     // Animation variants
     const formVariants = {
@@ -170,7 +133,7 @@ const Waitlist: NextPage = () => {
                             imageAlt="user icon"
                             placeholder="Full Name"
                             value={name}
-                            handleValueChange={handleNameChange}
+                            handleValueChange={(e) => setName(e.target.value)}
                         />
 
                         {/* Email Input */}
@@ -179,14 +142,14 @@ const Waitlist: NextPage = () => {
                             imageAlt="email icon"
                             placeholder="Email Address"
                             value={email}
-                            handleValueChange={handleEmailChange}
+                            handleValueChange={(e) => setEmail(e.target.value)}
                         />
 
                         <Text
                             fontSize={{ base: "md", md: "lg", lg: "xl" }}
                             color="#0B2545"
                         >
-                            I&apos;m interested in joining as a
+                            I'm interested in joining as a
                         </Text>
 
                         {/* Radio Buttons */}
@@ -284,45 +247,11 @@ const Waitlist: NextPage = () => {
                         </MotionBox>
 
                         {/* Join Button */}
-                        <Button
-                            bg="blue.900"
-                            color="white"
-                            size="lg"
-                            padding={"2rem"}
-                            borderRadius={"1rem"}
-                            w="100%"
-                            _hover={{
-                                backgroundColor: "#123a6b",
-                                transform: "scale(1.05)",
-                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                            }}
-                            transition="all 0.3s ease"
-                            onClick={async () => {
-                                const status = await sendEmail(
-                                    email,
-                                    name,
-                                    interest,
-                                    promotionalEmails
-                                );
-
-                                if (status.type === "success") {
-                                    showToast(toast, status.message, "success");
-
-                                    setName("");
-                                    setEmail("");
-                                    setInterest("homeowner");
-                                    setPromotionalEmails(false);
-                                } else if (status.type === "error") {
-                                    showToast(toast, status.message, "error");
-                                } else if (status.type === "warning") {
-                                    showToast(toast, status.message, "warning");
-                                } else {
-                                    showToast(toast, status.message, "info");
-                                }
-                            }}
-                        >
-                            Join
-                        </Button>
+                        <SubmitButton
+                            text="Join"
+                            endpoint={endpoint}
+                            inputData={inputData}
+                        />
                     </MotionVStack>
 
                     {/* Right Section: Image */}
