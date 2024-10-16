@@ -37,25 +37,6 @@ const ContactForm: FC = () => {
         threshold: 0.1, // Trigger when 10% of the section is in view
     });
 
-    // Handle State Functions
-    const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setFullName(e.target.value);
-        }
-    };
-
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setEmail(e.target.value);
-        }
-    };
-
-    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if (e.target.value.length > 0) {
-            setMessage(e.target.value);
-        }
-    };
-
     return (
         <Box ref={formRef} p={[6, 10, 20]} bg={"#FCFCFC"}>
             <Heading

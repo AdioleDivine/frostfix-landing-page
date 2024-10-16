@@ -1,7 +1,7 @@
 // @Usage: for the submit button on forms
 // @Notes: to use with more endpoints, create new interfaces and add them to the SubmitButtonProps interface
 
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 
 interface WaitlistData {
@@ -28,14 +28,6 @@ const SubmitButton: FC<SubmitButtonProps> = React.memo(
         const toast = useToast();
 
         console.log("using submit button");
-
-        if (endpoint === "waitlist") {
-            console.log("waitlist endpoint");
-        }
-
-        if (endpoint === "contact") {
-            console.log("contact endpoint");
-        }
 
         return (
             <Button
