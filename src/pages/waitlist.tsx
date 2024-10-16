@@ -11,8 +11,12 @@ import {
     Text,
     VStack,
     Checkbox,
+    FormControl,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+
+import { validateEmail, validateName } from "../utils/validation";
 
 import { SubmitButton } from "../components/core/Buttons";
 
@@ -28,7 +32,9 @@ const Waitlist: NextPage = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
-    const [promotionalEmails, setPromotionalEmails] = useState(false); // State for promotional emails
+    const [promotionalEmails, setPromotionalEmails] = useState(false);
+    const [nameError, setNameError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState<string | null>(null);
 
     const inputData = useMemo(
         () => ({
@@ -40,10 +46,29 @@ const Waitlist: NextPage = () => {
         [name, email, interest, promotionalEmails]
     );
 
-    // Memoize endpoint if it is dynamic
-    const endpoint = useMemo(() => {
-        return "waitlist";
-    }, []);
+    const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const nameValue = e.target.value;
+        const { isValid, errorMessage } = validateName(nameValue);
+
+        setName(nameValue);
+        !isValid ? setNameError(errorMessage) : setNameError(null);
+    };
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const emailValue = e.target.value;
+        const { isValid, errorMessage } = validateEmail(emailValue);
+
+        setEmail(emailValue);
+        !isValid ? setEmailError(errorMessage) : setEmailError(null);
+    };
+
+    // Reset form callback (sent to SubmitButton through props)
+    const resetForm = () => {
+        setName("");
+        setEmail("");
+        setInterest("homeowner");
+        setPromotionalEmails(false);
+    };
 
     // Animation variants
     const formVariants = {
@@ -128,22 +153,28 @@ const Waitlist: NextPage = () => {
                         </Heading>
 
                         {/* Name Input */}
-                        <TextInputWithIcon
-                            imageSrc="/images/solar_user-linear.svg"
-                            imageAlt="user icon"
-                            placeholder="Full Name"
-                            value={name}
-                            handleValueChange={(e) => setName(e.target.value)}
-                        />
+                        <FormControl isRequired isInvalid={!!nameError}>
+                            <TextInputWithIcon
+                                imageSrc="/images/solar_user-linear.svg"
+                                imageAlt="user icon"
+                                placeholder="Full Name"
+                                value={name}
+                                handleValueChange={handleNameChange}
+                            />
+                            <FormErrorMessage>{nameError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Email Input */}
-                        <TextInputWithIcon
-                            imageSrc="/images/mdi-light_email.svg"
-                            imageAlt="email icon"
-                            placeholder="Email Address"
-                            value={email}
-                            handleValueChange={(e) => setEmail(e.target.value)}
-                        />
+                        <FormControl isRequired isInvalid={!!emailError}>
+                            <TextInputWithIcon
+                                imageSrc="/images/mdi-light_email.svg"
+                                imageAlt="email icon"
+                                placeholder="Email Address"
+                                value={email}
+                                handleValueChange={handleEmailChange}
+                            />
+                            <FormErrorMessage>{emailError}</FormErrorMessage>
+                        </FormControl>
 
                         <Text
                             fontSize={{ base: "md", md: "lg", lg: "xl" }}
@@ -249,8 +280,9 @@ const Waitlist: NextPage = () => {
                         {/* Join Button */}
                         <SubmitButton
                             text="Join"
-                            endpoint={endpoint}
+                            endpoint="waitlist"
                             inputData={inputData}
+                            resetForm={resetForm}
                         />
                     </MotionVStack>
 

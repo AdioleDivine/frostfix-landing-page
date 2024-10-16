@@ -21,10 +21,11 @@ interface SubmitButtonProps {
     text?: string;
     endpoint: string;
     inputData: WaitlistData | ContactData;
+    resetForm: () => void;
 }
 
 const SubmitButton: FC<SubmitButtonProps> = React.memo(
-    ({ text, endpoint, inputData }) => {
+    ({ text, endpoint, inputData, resetForm }) => {
         const toast = useToast();
 
         console.log("using submit button");
@@ -48,6 +49,11 @@ const SubmitButton: FC<SubmitButtonProps> = React.memo(
                     console.log(status);
 
                     showToast(toast, status.message, status.type);
+
+                    if (status.type === "success") {
+                        // Reset form
+                        resetForm();
+                    }
                 }}
             >
                 {text ? text : "Submit"}
@@ -81,7 +87,13 @@ const postUser = async (
         };
     }
 
-    return { type: "success", message: "Email was sent successfully" };
+    return {
+        type: "success",
+        message:
+            endpoint === "waitlist"
+                ? "Welcome to the Horai Waitlist! 🎉"
+                : "Email was sent successfully!",
+    };
 };
 
 const showToast = (toast: any, message: string, status: string) => {

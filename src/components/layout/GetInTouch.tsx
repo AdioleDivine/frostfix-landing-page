@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, ChangeEvent } from "react";
 import { useInView } from "react-intersection-observer";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import {
@@ -14,8 +14,12 @@ import {
     GridItem,
     Icon,
     Link,
+    FormControl,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import framer-motion
+
+import { validateEmail, validateName } from "../../utils/validation";
 
 import { MailIcon } from "../core/Icons";
 import { SubmitButton } from "../core/Buttons";
@@ -24,11 +28,36 @@ const ContactForm: FC = () => {
     const [fullName, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [fullNameError, setFullNameError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState<string | null>(null);
 
     const inputData = {
         fullName,
         email,
         message,
+    };
+
+    const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const nameValue = e.target.value;
+        const { isValid, errorMessage } = validateName(nameValue);
+
+        setFullName(nameValue);
+        !isValid ? setFullNameError(errorMessage) : setFullNameError(null);
+    };
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const emailValue = e.target.value;
+        const { isValid, errorMessage } = validateEmail(emailValue);
+
+        setEmail(emailValue);
+        !isValid ? setEmailError(errorMessage) : setEmailError(null);
+    };
+
+    // Reset form callback (sent to SubmitButton through props)
+    const resetForm = () => {
+        setFullName("");
+        setEmail("");
+        setMessage("");
     };
 
     // Set up the scroll detection for animation triggers
@@ -72,43 +101,49 @@ const ContactForm: FC = () => {
                         </Flex>
 
                         {/* Full Name Input */}
-                        <Input
-                            placeholder="Full name"
-                            size="lg"
-                            color="black"
-                            borderRadius="md"
-                            aria-label="Full name"
-                            _hover={{
-                                borderColor: "blue.500", // Frosty blue border on hover
-                            }}
-                            _focus={{
-                                borderColor: "blue.900", // Dark blue on focus
-                                transform: "scale(1.02)", // Slight scaling effect on focus
-                                transition: "transform 0.2s ease", // Smooth transition
-                            }}
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
-                        />
+                        <FormControl isRequired isInvalid={!!fullNameError}>
+                            <Input
+                                placeholder="Full name"
+                                size="lg"
+                                color="black"
+                                borderRadius="md"
+                                aria-label="Full name"
+                                _hover={{
+                                    borderColor: "blue.500",
+                                }}
+                                _focus={{
+                                    borderColor: "blue.900",
+                                    transform: "scale(1.02)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                                value={fullName}
+                                onChange={handleFullNameChange}
+                            />
+                            <FormErrorMessage>{fullNameError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Email Address Input */}
-                        <Input
-                            placeholder="Email address"
-                            size="lg"
-                            color="black"
-                            borderRadius="md"
-                            aria-label="Email address"
-                            type="email"
-                            _hover={{
-                                borderColor: "blue.500", // Frosty blue border on hover
-                            }}
-                            _focus={{
-                                borderColor: "blue.900", // Dark blue on focus
-                                transform: "scale(1.02)", // Slight scaling effect on focus
-                                transition: "transform 0.2s ease", // Smooth transition
-                            }}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                        <FormControl isRequired isInvalid={!!emailError}>
+                            <Input
+                                placeholder="Email address"
+                                size="lg"
+                                color="black"
+                                borderRadius="md"
+                                aria-label="Email address"
+                                type="email"
+                                _hover={{
+                                    borderColor: "blue.500",
+                                }}
+                                _focus={{
+                                    borderColor: "blue.900",
+                                    transform: "scale(1.02)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                                value={email}
+                                onChange={handleEmailChange}
+                            />
+                            <FormErrorMessage>{emailError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Description Textarea */}
                         <Textarea
@@ -134,6 +169,7 @@ const ContactForm: FC = () => {
                         <SubmitButton
                             endpoint="contact"
                             inputData={inputData}
+                            resetForm={resetForm}
                         />
                     </VStack>
                 </GridItem>
