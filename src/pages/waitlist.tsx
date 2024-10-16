@@ -1,9 +1,8 @@
 import { NextPage } from "next";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useMemo, ChangeEvent } from "react";
 import {
     Box,
     Heading,
-    Button,
     Radio,
     RadioGroup,
     Stack,
@@ -12,69 +11,63 @@ import {
     Text,
     VStack,
     Checkbox,
+    FormControl,
+    FormErrorMessage,
 } from "@chakra-ui/react";
-import { motion } from "framer-motion"; // Import Framer Motion for animations
+import { motion } from "framer-motion";
 
-import Header from "../components/layout/Header"; // Import the Header
-import TextInputWithIcon from "../components/core/TextInputWithIcon"; // Import the TextInputWithIcon component
+import { validateEmail, validateName } from "../utils/validation";
+
+import { SubmitButton } from "../components/core/Buttons";
+
+import Header from "../components/layout/Header";
+import TextInputWithIcon from "../components/core/TextInputWithIcon";
 
 // Motion components for animations
 const MotionBox = motion(Box);
 const MotionFlex = motion(Flex);
 const MotionVStack = motion(VStack);
 
-const sendEmail = async (
-    email: string,
-    name: string,
-    interest: string,
-    promotionalEmails: boolean
-) => {
-    // Send email logic here
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-    if (!API_URL) {
-        console.error("API URL not found");
-        return;
-    }
-
-    const res = await fetch(`${API_URL}/waitlist`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email,
-            name,
-            interest: interest.toUpperCase(),
-            promotionalEmails,
-        }),
-    });
-
-    if (!res.ok) {
-        console.error("Failed to send email", res.status, res.statusText);
-    }
-
-    const data = await res.json();
-    console.log("Email sent!", data);
-};
-
 const Waitlist: NextPage = () => {
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [interest, setInterest] = useState<string>("homeowner");
-    const [promotionalEmails, setPromotionalEmails] = useState(false); // State for promotional emails
+    const [promotionalEmails, setPromotionalEmails] = useState(false);
+    const [nameError, setNameError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState<string | null>(null);
 
-    // setState functions
+    const inputData = useMemo(
+        () => ({
+            name,
+            email,
+            interest: interest.toUpperCase(),
+            promotionalEmails,
+        }),
+        [name, email, interest, promotionalEmails]
+    );
+
     const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setName(e.target.value);
-        }
+        const nameValue = e.target.value;
+        const { isValid, errorMessage } = validateName(nameValue);
+
+        setName(nameValue);
+        !isValid ? setNameError(errorMessage) : setNameError(null);
     };
 
     const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setEmail(e.target.value);
-        }
+        const emailValue = e.target.value;
+        const { isValid, errorMessage } = validateEmail(emailValue);
+
+        setEmail(emailValue);
+        !isValid ? setEmailError(errorMessage) : setEmailError(null);
+    };
+
+    // Reset form callback (sent to SubmitButton through props)
+    const resetForm = () => {
+        setName("");
+        setEmail("");
+        setInterest("homeowner");
+        setPromotionalEmails(false);
     };
 
     // Animation variants
@@ -160,28 +153,34 @@ const Waitlist: NextPage = () => {
                         </Heading>
 
                         {/* Name Input */}
-                        <TextInputWithIcon
-                            imageSrc="/images/solar_user-linear.svg"
-                            imageAlt="user icon"
-                            placeholder="Full Name"
-                            value={name}
-                            handleValueChange={handleNameChange}
-                        />
+                        <FormControl isRequired isInvalid={!!nameError}>
+                            <TextInputWithIcon
+                                imageSrc="/images/solar_user-linear.svg"
+                                imageAlt="user icon"
+                                placeholder="Full Name"
+                                value={name}
+                                handleValueChange={handleNameChange}
+                            />
+                            <FormErrorMessage>{nameError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Email Input */}
-                        <TextInputWithIcon
-                            imageSrc="/images/mdi-light_email.svg"
-                            imageAlt="email icon"
-                            placeholder="Email Address"
-                            value={email}
-                            handleValueChange={handleEmailChange}
-                        />
+                        <FormControl isRequired isInvalid={!!emailError}>
+                            <TextInputWithIcon
+                                imageSrc="/images/mdi-light_email.svg"
+                                imageAlt="email icon"
+                                placeholder="Email Address"
+                                value={email}
+                                handleValueChange={handleEmailChange}
+                            />
+                            <FormErrorMessage>{emailError}</FormErrorMessage>
+                        </FormControl>
 
                         <Text
                             fontSize={{ base: "md", md: "lg", lg: "xl" }}
                             color="#0B2545"
                         >
-                            I&apos;m interested in joining as a
+                            I'm interested in joining as a
                         </Text>
 
                         {/* Radio Buttons */}
@@ -191,29 +190,6 @@ const Waitlist: NextPage = () => {
                             color="#0B2545"
                         >
                             <Stack direction="row" gap="2rem">
-                                <MotionBox
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    variants={radioVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                >
-                                    <Radio
-                                        value="contractor"
-                                        size="lg"
-                                        _hover={{
-                                            borderColor: "blue.500",
-                                            transition: "all 0.3s ease",
-                                        }}
-                                        _checked={{
-                                            bg: "blue.900",
-                                            color: "white",
-                                            borderColor: "blue.900",
-                                        }}
-                                    >
-                                        Contractor
-                                    </Radio>
-                                </MotionBox>
                                 <MotionBox
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.95 }}
@@ -235,6 +211,29 @@ const Waitlist: NextPage = () => {
                                         }}
                                     >
                                         Homeowner
+                                    </Radio>
+                                </MotionBox>
+                                <MotionBox
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    variants={radioVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                >
+                                    <Radio
+                                        value="contractor"
+                                        size="lg"
+                                        _hover={{
+                                            borderColor: "blue.500",
+                                            transition: "all 0.3s ease",
+                                        }}
+                                        _checked={{
+                                            bg: "blue.900",
+                                            color: "white",
+                                            borderColor: "blue.900",
+                                        }}
+                                    >
+                                        Contractor
                                     </Radio>
                                 </MotionBox>
                             </Stack>
@@ -279,30 +278,12 @@ const Waitlist: NextPage = () => {
                         </MotionBox>
 
                         {/* Join Button */}
-                        <Button
-                            bg="blue.900"
-                            color="white"
-                            size="lg"
-                            padding={"2rem"}
-                            borderRadius={"1rem"}
-                            w="100%"
-                            _hover={{
-                                backgroundColor: "#123a6b",
-                                transform: "scale(1.05)",
-                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                            }}
-                            transition="all 0.3s ease"
-                            onClick={() =>
-                                sendEmail(
-                                    email,
-                                    name,
-                                    interest,
-                                    promotionalEmails
-                                )
-                            }
-                        >
-                            Join
-                        </Button>
+                        <SubmitButton
+                            text="Join"
+                            endpoint="waitlist"
+                            inputData={inputData}
+                            resetForm={resetForm}
+                        />
                     </MotionVStack>
 
                     {/* Right Section: Image */}

@@ -1,11 +1,10 @@
-import { FC, useState } from "react";
-import { useInView } from "react-intersection-observer"; // Import useInView for scroll detection
+import { FC, useState, ChangeEvent } from "react";
+import { useInView } from "react-intersection-observer";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import {
     Box,
     Heading,
     Input,
-    Button,
     Image,
     Flex,
     Text,
@@ -15,69 +14,57 @@ import {
     GridItem,
     Icon,
     Link,
+    FormControl,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion"; // Import framer-motion
 
+import { validateEmail, validateName } from "../../utils/validation";
+
 import { MailIcon } from "../core/Icons";
-
-const sendEmail = async (fullName: string, email: string, message: string) => {
-    // Send email logic here
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-    if (!API_URL) {
-        console.error("API URL not found");
-        return;
-    }
-
-    const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            fullName,
-            email,
-            message,
-        }),
-    });
-
-    if (!res.ok) {
-        console.error("Failed to send email", res.status, res.statusText);
-    }
-
-    const data = await res.json();
-    console.log("Email sent!", data);
-};
+import { SubmitButton } from "../core/Buttons";
 
 const ContactForm: FC = () => {
     const [fullName, setFullName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [fullNameError, setFullNameError] = useState<string | null>(null);
+    const [emailError, setEmailError] = useState<string | null>(null);
+
+    const inputData = {
+        fullName,
+        email,
+        message,
+    };
+
+    const handleFullNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const nameValue = e.target.value;
+        const { isValid, errorMessage } = validateName(nameValue);
+
+        setFullName(nameValue);
+        !isValid ? setFullNameError(errorMessage) : setFullNameError(null);
+    };
+
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const emailValue = e.target.value;
+        const { isValid, errorMessage } = validateEmail(emailValue);
+
+        setEmail(emailValue);
+        !isValid ? setEmailError(errorMessage) : setEmailError(null);
+    };
+
+    // Reset form callback (sent to SubmitButton through props)
+    const resetForm = () => {
+        setFullName("");
+        setEmail("");
+        setMessage("");
+    };
 
     // Set up the scroll detection for animation triggers
     const { ref: formRef, inView: formInView } = useInView({
         triggerOnce: true, // Only trigger once when the user scrolls to it
         threshold: 0.1, // Trigger when 10% of the section is in view
     });
-
-    // Handle State Functions
-    const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setFullName(e.target.value);
-        }
-    };
-
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 0) {
-            setEmail(e.target.value);
-        }
-    };
-
-    const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        if (e.target.value.length > 0) {
-            setMessage(e.target.value);
-        }
-    };
 
     return (
         <Box ref={formRef} p={[6, 10, 20]} bg={"#FCFCFC"}>
@@ -114,43 +101,49 @@ const ContactForm: FC = () => {
                         </Flex>
 
                         {/* Full Name Input */}
-                        <Input
-                            placeholder="Full name"
-                            size="lg"
-                            color="black"
-                            borderRadius="md"
-                            aria-label="Full name"
-                            _hover={{
-                                borderColor: "blue.500", // Frosty blue border on hover
-                            }}
-                            _focus={{
-                                borderColor: "blue.900", // Dark blue on focus
-                                transform: "scale(1.02)", // Slight scaling effect on focus
-                                transition: "transform 0.2s ease", // Smooth transition
-                            }}
-                            value={fullName}
-                            onChange={handleFullNameChange}
-                        />
+                        <FormControl isRequired isInvalid={!!fullNameError}>
+                            <Input
+                                placeholder="Full name"
+                                size="lg"
+                                color="black"
+                                borderRadius="md"
+                                aria-label="Full name"
+                                _hover={{
+                                    borderColor: "blue.500",
+                                }}
+                                _focus={{
+                                    borderColor: "blue.900",
+                                    transform: "scale(1.02)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                                value={fullName}
+                                onChange={handleFullNameChange}
+                            />
+                            <FormErrorMessage>{fullNameError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Email Address Input */}
-                        <Input
-                            placeholder="Email address"
-                            size="lg"
-                            color="black"
-                            borderRadius="md"
-                            aria-label="Email address"
-                            type="email"
-                            _hover={{
-                                borderColor: "blue.500", // Frosty blue border on hover
-                            }}
-                            _focus={{
-                                borderColor: "blue.900", // Dark blue on focus
-                                transform: "scale(1.02)", // Slight scaling effect on focus
-                                transition: "transform 0.2s ease", // Smooth transition
-                            }}
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
+                        <FormControl isRequired isInvalid={!!emailError}>
+                            <Input
+                                placeholder="Email address"
+                                size="lg"
+                                color="black"
+                                borderRadius="md"
+                                aria-label="Email address"
+                                type="email"
+                                _hover={{
+                                    borderColor: "blue.500",
+                                }}
+                                _focus={{
+                                    borderColor: "blue.900",
+                                    transform: "scale(1.02)",
+                                    transition: "transform 0.2s ease",
+                                }}
+                                value={email}
+                                onChange={handleEmailChange}
+                            />
+                            <FormErrorMessage>{emailError}</FormErrorMessage>
+                        </FormControl>
 
                         {/* Description Textarea */}
                         <Textarea
@@ -169,27 +162,15 @@ const ContactForm: FC = () => {
                                 transition: "transform 0.2s ease", // Smooth transition
                             }}
                             value={message}
-                            onChange={handleMessageChange}
+                            onChange={(e) => setMessage(e.target.value)}
                         />
 
                         {/* Submit Button with hover animation */}
-                        <Button
-                            bg="blue.900"
-                            color="white"
-                            size="lg"
-                            borderRadius="md"
-                            width="fit-content"
-                            transition="all 0.3s ease" // Smooth transition for hover effects
-                            _hover={{
-                                backgroundColor: "#123a6b", // Change the background on hover
-                                color: "#ffffff", // Keep the text color white
-                                transform: "scale(1.05)", // Slightly enlarge the button
-                                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)", // Add a soft shadow
-                            }}
-                            onClick={() => sendEmail(fullName, email, message)}
-                        >
-                            Submit
-                        </Button>
+                        <SubmitButton
+                            endpoint="contact"
+                            inputData={inputData}
+                            resetForm={resetForm}
+                        />
                     </VStack>
                 </GridItem>
 

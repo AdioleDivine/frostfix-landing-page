@@ -2,7 +2,7 @@ import Link from "next/link"; // Import Next.js Link
 import { FC } from "react";
 import { Button, Flex } from "@chakra-ui/react";
 
-const ActionBtns: FC = () => {
+const ActionButton: FC = () => {
     return (
         <Flex>
             <Link href="/waitlist" passHref>
@@ -32,4 +32,4 @@ const ActionBtns: FC = () => {
     );
 };
 
-export default ActionBtns;
+export default ActionButton;
