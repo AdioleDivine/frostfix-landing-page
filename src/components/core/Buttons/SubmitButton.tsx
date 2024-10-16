@@ -1,8 +1,5 @@
-// @Usage: for the submit button on forms
-// @Notes: to use with more endpoints, create new interfaces and add them to the SubmitButtonProps interface
-
-import React, { FC } from "react";
-import { Button, useToast } from "@chakra-ui/react";
+import React, { FC, useState } from "react";
+import { Button, useToast, Spinner } from "@chakra-ui/react";
 
 interface WaitlistData {
     name: string;
@@ -27,6 +24,7 @@ interface SubmitButtonProps {
 const SubmitButton: FC<SubmitButtonProps> = React.memo(
     ({ text, endpoint, inputData, resetForm }) => {
         const toast = useToast();
+        const [isLoading, setIsLoading] = useState(false); // Track loading state
 
         console.log("using submit button");
 
@@ -45,18 +43,22 @@ const SubmitButton: FC<SubmitButtonProps> = React.memo(
                 }}
                 transition="all 0.3s ease"
                 onClick={async () => {
+                    setIsLoading(true); // Set loading state when clicked
+
                     const status = await postUser(endpoint, inputData);
                     console.log(status);
 
                     showToast(toast, status.message, status.type);
 
                     if (status.type === "success") {
-                        // Reset form
                         resetForm();
                     }
+
+                    setIsLoading(false); // Reset loading state when done
                 }}
+                disabled={isLoading} // Disable button while loading
             >
-                {text ? text : "Submit"}
+                {isLoading ? <Spinner size="md" /> : text ? text : "Submit"}
             </Button>
         );
     }
