@@ -10,6 +10,7 @@ import {
     Flex,
     Icon,
 } from "@chakra-ui/react";
+import LogoIcon from "../core/logoIcon";
 
 const Footer: FC = () => {
     return (
@@ -32,9 +33,7 @@ const Footer: FC = () => {
                 {/* Left side: Logo (replaced by h2) and description */}
                 <GridItem>
                     <Flex direction="column">
-                        <Heading as="h2" fontSize="3xl" mb={4} color={"#000"}>
-                            Horai
-                        </Heading>{" "}
+                       <LogoIcon/>
                         {/* Replaced logo with Heading */}
                         <Text color="gray.600" fontSize="md">
                         Your trusted partner for every season&apos;s care!
