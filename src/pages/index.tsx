@@ -18,7 +18,7 @@ const Home: NextPage = () => {
                 <title>Horai</title>
                 <meta
                     name="description"
-                    content="Horai connects homeowners with reliable snow removal services and allows contractors to take on jobs in their area. Book a service easily or find local snow removal jobs on-demand with Horai."
+                    content="Horai connects homeowners with reliable contracting services and allows contractors to take on jobs in their area. Book a service easily or find local snow removal jobs on-demand with Horai."
                 />
                 <meta
                     name="viewport"
@@ -28,15 +28,7 @@ const Home: NextPage = () => {
             </Head>
 
             {/* Wrapping the whole content in a Box with a snow background */}
-            <Box
-                as="main"
-                className="home-main"
-                bgImage={`url('/images/snow.jpg')`} // Make sure this is the correct path
-                bgSize="cover" // Set the background size to cover the whole area
-                bgPosition="center" // Center the background
-                bgRepeat="repeat" // Repeat the background if necessary
-                minH="100vh" // Make sure it fills the whole page height
-            >
+
                 <Header />
                 <Hero />
                 {/* Add id attributes to allow navigation to scroll to these sections */}
@@ -55,7 +47,6 @@ const Home: NextPage = () => {
                 <Footer />
                 {/* Scroll to Top button */}
                 <ScrollToTop /> {/* Scroll to Top button added at the bottom */}
-            </Box>
         </>
     );
 };

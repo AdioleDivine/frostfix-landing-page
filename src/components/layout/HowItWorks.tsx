@@ -47,7 +47,7 @@ const works = [
     {
         src: "/images/request-icon.png",
         title: "Request",
-        text: "Select the areas you want shoveled and request a job from anywhere. If salt is selected, leave it by the front door.",
+        text: "Select the areas you want serviced and request a job from anywhere.",
     },
     {
         src: "/images/relax-icon.png",
@@ -57,7 +57,7 @@ const works = [
     {
         src: "/images/rate-icon.png",
         title: "Rate",
-        text: "You have the option to rate the work and thank the Snow Pacifier by adding a tip within 24 hours.",
+        text: "You have the option to rate the work and thank the contractor by adding a tip within 24 hours.",
     },
 ];
 
@@ -72,7 +72,7 @@ const HowItWorks: FC = () => {
         <MotionBox
             p={{ base: 4, md: 10 }} // Reduced padding on mobile, larger on tablet and desktop
             bg="rgba(252,252,252,1)"
-            initial="hidden"
+            // initial="hidden"
             whileInView="visible"
             variants={containerVariants}
             viewport={{ once: true }} // Animation only happens once

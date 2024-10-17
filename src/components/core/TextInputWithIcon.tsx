@@ -21,7 +21,8 @@ const TextInputWithIcon: FC<TextInputWithIconProps> = ({
     const inputStyles = {
         borderRadius: "0.8rem",
         size: "lg",
-        w: "100%",
+        h: "60px",
+        w: ["100%", "100%", "80%"],
         color: "#000", // Ensure text inside the input is visible
         _placeholder: { color: "#A0AEC0" }, // Lighter color for the placeholder
         _hover: {

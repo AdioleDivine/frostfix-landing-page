@@ -29,14 +29,15 @@ const Hero: FC = () => {
 
     return (
         <MotionBox
+            mb={-0.5}
             minH={"auto"} // Adjusted minimum height for the hero section
-            pt={[10, 5]} // Padding for mobile and desktop
+            pt={[8, 5]} // Padding for mobile and desktop
             position="relative"
             bgColor={"#FFFFFF"} // Solid white background
             bgImage="url('/images/snow.png')" // Add snow background image
-            bgSize="contain" // Make the background cover the entire area
-            bgPosition="center" // Center the background image
-            initial="hidden"
+            bgSize="cover" // Make the background cover the entire area
+            bgPosition="unset" // Center the background image
+            // initial="hidden"
             animate="visible"
             variants={containerVariants} // Apply the animation variants
         >
@@ -61,6 +62,7 @@ const Hero: FC = () => {
                             fontSize={["3xl", "5xl", "7xl"]}
                             color={"black"}
                             mb={4}
+                            mt={120}
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5, duration: 1 }} // Delay to make it smoother

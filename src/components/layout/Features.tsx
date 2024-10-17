@@ -51,7 +51,7 @@ const Features: FC = () => {
     });
 
     return (
-        <Box p={[6, 10, 20]} bg={"#FCFCFC"}>
+        <Box p={[6, 10, 20]} bg={"#FCFCFC"} mt={-0.5}>
             {/* Title and Subtitle */}
             <VStack spacing={4} textAlign="center" mb={10}>
                 <Heading fontSize={["2xl", "3xl", "4xl"]} color={"black"}>

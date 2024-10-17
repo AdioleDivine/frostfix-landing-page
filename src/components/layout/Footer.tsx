@@ -17,8 +17,9 @@ const Footer: FC = () => {
             as="footer"
             bg="white"
             p={[6, 8, 10]}
-            mt={10}
-            borderTop="1px solid #E5E5E5"
+            mt={-0.5}
+
+            // borderTop="1px solid #E5E5E5"
         >
             <Grid
                 templateColumns={{

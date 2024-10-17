@@ -106,18 +106,20 @@ const Waitlist: NextPage = () => {
             {/* Form Section */}
             <Box
                 minH="100vh"
-                p={[6, 10, 20]}
+                p={[6, 0,30]}
                 bg="white"
                 display="flex"
                 justifyContent="center"
                 alignItems="start"
                 bgImage="url('/images/snow.png')" // Add snow background image
-                bgSize="contain" // Make the background cover the entire area
-                bgPosition="center" // Center the background image
+                bgSize="cover" // Make the background cover the entire area
+                bgPosition="unset" // Center the background image
             >
                 <MotionBox
                     w="100%"
-                    maxW="1000px"
+                    maxW="100%"
+                    mt={110}
+                    p={[0, 0, 10]}
                     display="flex"
                     alignItems="center"
                     flexDirection={{ base: "column", md: "row" }}

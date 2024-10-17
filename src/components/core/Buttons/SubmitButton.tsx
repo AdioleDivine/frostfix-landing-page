@@ -35,7 +35,7 @@ const SubmitButton: FC<SubmitButtonProps> = React.memo(
                 size="lg"
                 padding={"2rem"}
                 borderRadius={"1rem"}
-                w="100%"
+                w={["100%", "100%", "80%"]}
                 _hover={{
                     backgroundColor: "#123a6b",
                     transform: "scale(1.05)",

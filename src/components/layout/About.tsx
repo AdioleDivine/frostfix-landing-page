@@ -23,7 +23,7 @@ const BenefitCard = ({ title, text }: BenefitCardProps) => (
         <VStack align="center" flexDirection={"row"} spacing={2}>
             <BenefitIcon /> {/* Icon on top */}
             <Heading
-                fontSize={["1.5rem", "1.75rem", "2rem"]}
+                fontSize={["1.3rem", "1.75rem", "2rem"]}
                 color="black"
                 textAlign="center"
             >
@@ -49,7 +49,7 @@ const AboutSection: FC = () => {
     });
 
     return (
-        <Box p={["5rem", "2rem", "1.5rem"]} bgColor={"#FCFCFC"} ref={ref}>
+        <Box p={["2rem", "2rem", "1.5rem"]} bgColor={"#FCFCFC"} ref={ref}>
             {" "}
             {/* Background color set to #FCFCFC */}
             <Grid
@@ -67,7 +67,7 @@ const AboutSection: FC = () => {
                 {/* Left Column: About Horai */}
                 <GridItem
                     bgColor={"#FCFCFC"}
-                    padding={["1rem", "0", "0 3.7rem"]}
+                    padding={["0rem", "0", "0 3.7rem"]}
                     borderRadius={"1rem"}
                 >
                     <Heading

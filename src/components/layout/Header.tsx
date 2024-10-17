@@ -16,12 +16,19 @@ const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
-        <Flex
-            justify="space-between"
-            align="center"
-            p={["0.75rem", "0.75rem 2.5rem", "0.75rem 4rem"]}
-            bg="#FFFFFF"
-        >
+<Flex
+    justify="space-between"
+    align="center"
+            p={["2rem", "0.75rem 2.5rem", "0.75rem 4rem"]}
+            mt={-8}
+    bg="transparent" // Change background to transparent
+    position="absolute" // Fix the position so it overlays the content
+    top={0}
+    left={0}
+    width="100%" // Ensure the header spans the full width
+    zIndex={10} // Ensure the header is above the background content
+>
+
             {/* Logo */}
             <Box>
                 <Logo />
