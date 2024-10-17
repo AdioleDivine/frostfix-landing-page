@@ -109,3 +109,5 @@ const showToast = (toast: any, message: string, status: string) => {
 };
 
 export default SubmitButton;
+
+SubmitButton.displayName = "SubmitButton";

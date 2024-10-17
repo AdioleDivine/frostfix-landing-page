@@ -177,7 +177,7 @@ const Waitlist: NextPage = () => {
                             fontSize={{ base: "md", md: "lg", lg: "xl" }}
                             color="#0B2545"
                         >
-                            I'm interested in joining as a
+                            I&apos;m interested in joining as a
                         </Text>
 
                         {/* Radio Buttons */}

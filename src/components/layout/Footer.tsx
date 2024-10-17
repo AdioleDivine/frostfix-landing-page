@@ -36,7 +36,7 @@ const Footer: FC = () => {
                         </Heading>{" "}
                         {/* Replaced logo with Heading */}
                         <Text color="gray.600" fontSize="md">
-                        Your trusted partner for every season's care!
+                        Your trusted partner for every season&apos;s care!
                         </Text>
                     </Flex>
                 </GridItem>

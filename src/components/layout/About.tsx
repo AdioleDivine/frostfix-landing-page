@@ -82,10 +82,10 @@ const AboutSection: FC = () => {
                         color={"#383838"}
                         mb={4}
                     >
-                       Horai App is your reliable companion for seasonal home care. We specialize in offering tailored snow removal, driveway clearing, and leaf blowing services designed to keep your home safe, clean, and accessible throughout the year. Whether it's the harsh winter or the leafy fall, Horai App ensures your property is well-maintained, giving you peace of mind.
+                       Horai App is your reliable companion for seasonal home care. We specialize in offering tailored snow removal, driveway clearing, and leaf blowing services designed to keep your home safe, clean, and accessible throughout the year. Whether it&apos;s the harsh winter or the leafy fall, Horai App ensures your property is well-maintained, giving you peace of mind.
                     </Text>
                     <Text fontSize={["1rem", "1rem", "1rem"]} color={"#383838"}>
-                    With features like early-hour snow removal and subscription packages, we prioritize convenience and flexibility, allowing homeowners to choose the services that best fit their needs. Whether you're a homeowner looking for professional help or a contractor offering your services, Horai App brings the community together, making seasonal maintenance hassle-free and efficient.
+                    With features like early-hour snow removal and subscription packages, we prioritize convenience and flexibility, allowing homeowners to choose the services that best fit their needs. Whether you&apos;re a homeowner looking for professional help or a contractor offering your services, Horai App brings the community together, making seasonal maintenance hassle-free and efficient.
                     </Text>
                 </GridItem>
 
