@@ -36,9 +36,7 @@ const Footer: FC = () => {
                         </Heading>{" "}
                         {/* Replaced logo with Heading */}
                         <Text color="gray.600" fontSize="md">
-                            Lorem ipsum dolor sit amet consectetur. Nec integer
-                            consectetur arcu cursus massa nulla egestas.
-                            Malesuada tellus porta justo egestas velit.
+                        Your trusted partner for every season's care!
                         </Text>
                     </Flex>
                 </GridItem>
@@ -109,22 +107,21 @@ const Footer: FC = () => {
                         />{" "}
                         {/* Address icon */}
                         <Text color="gray.600">
-                            ui fames Cras Street, ridiculus in fringilla arcu
-                            interdum ultrices Canada
+                         Ottawa, Canada
                         </Text>
                     </Flex>
-                    <Flex alignItems="center" mb={4}>
+                    {/* <Flex alignItems="center" mb={4}>
                         <Icon
                             as={FaPhoneAlt}
                             boxSize={5}
                             mr={3}
                             color="blue.900"
-                        />{" "}
+                        />{" "} */}
                         {/* Phone icon */}
-                        <Text color="gray.600">
+                        {/* <Text color="gray.600">
                             +447 093 3773 373, +447 8363 733 333
-                        </Text>
-                    </Flex>
+                        </Text> */}
+                    {/* </Flex> */}
                     <Flex alignItems="center">
                         <Icon
                             as={FaEnvelope}

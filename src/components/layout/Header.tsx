@@ -9,6 +9,7 @@ import { HamburgerIcon, CloseIcon } from "../core/Icons";
 
 interface HeaderProps {
     showActionButton?: boolean;
+    background?: string;
 }
 
 const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
@@ -19,7 +20,7 @@ const Header: FC<HeaderProps> = ({ showActionButton = true }) => {
             justify="space-between"
             align="center"
             p={["0.75rem", "0.75rem 2.5rem", "0.75rem 4rem"]}
-            bg="#FEFEFF"
+            bg="#FFFFFF"
         >
             {/* Logo */}
             <Box>

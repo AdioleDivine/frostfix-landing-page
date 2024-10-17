@@ -196,12 +196,11 @@ const ContactForm: FC = () => {
                                 alt="Location Icon"
                             />
                             <Text>
-                                ui fames Cras Street, ridiculus in fringilla
-                                arcu interdum ultrices Canada
+                              Ottawa, Canada
                             </Text>
                         </Flex>
 
-                        <Flex align="center">
+                        {/* <Flex align="center">
                             <Image
                                 src="/images/call-calling.svg"
                                 boxSize={6}
@@ -209,7 +208,7 @@ const ContactForm: FC = () => {
                                 alt="Phone Icon"
                             />
                             <Text>+447 093 3773 373, +447 8363 733 333</Text>
-                        </Flex>
+                        </Flex> */}
 
                         <Flex align="center">
                             <Image

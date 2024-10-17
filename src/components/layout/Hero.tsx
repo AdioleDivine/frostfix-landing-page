@@ -32,7 +32,10 @@ const Hero: FC = () => {
             minH={"auto"} // Adjusted minimum height for the hero section
             pt={[10, 5]} // Padding for mobile and desktop
             position="relative"
-            bgColor={"#FEFEFF"} // Solid white background
+            bgColor={"#FFFFFF"} // Solid white background
+            bgImage="url('/images/snow.png')" // Add snow background image
+            bgSize="contain" // Make the background cover the entire area
+            bgPosition="center" // Center the background image
             initial="hidden"
             animate="visible"
             variants={containerVariants} // Apply the animation variants
@@ -76,7 +79,7 @@ const Hero: FC = () => {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1, duration: 1 }} // Delayed to sync with heading
                         >
-                            Book a plow service online. Pay a flat rate and
+                            Book a service online. Pay a flat rate and
                             enjoy top-of-the-line customer service.
                         </MotionText>
 

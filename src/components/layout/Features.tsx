@@ -79,7 +79,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Booking"
-                        text="Need your snow cleared by a certain time? You can now schedule a job up to twelve hours ahead! Scheduled jobs are offered to Snow Pacifiers in advance to get them done on time."
+                        text="Need your snow cleared, leaf blown, or lawn mowed by a certain time? You can now schedule a job up to twelve hours ahead! Scheduled jobs are offered to contractors in advance to get them done on time."
                         icon="/images/booking.png" // Replace with the correct PNG path
                     />
                 </GridItem>
@@ -87,7 +87,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Assesses Property Using AI"
-                        text="No need to measure your property – simply enter your address. Using artificial intelligence, Forstfix tries to detect the location of your sidewalk, walkway, and driveway, and estimates their dimensions."
+                        text="No need to measure your property – Simply take a picture. Using artificial intelligence, Horai estimates the dimensions of your walkway, and driveway.."
                         icon="/images/ai.png" // Replace with the correct PNG path
                     />
                 </GridItem>
@@ -95,7 +95,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Reuse Your Favorite Options"
-                        text="We know you don’t have a lot of time, so no need to select the same options each time it snows. The app remembers your previous selections, so you can reuse the options you like to quickly request a job."
+                        text="We know you don’t have a lot of time, so no need to select the same options each time. Horai remembers your previous selections, so you can reuse the options you like to quickly request a job."
                         icon="/images/reuse.png" // Replace with the correct PNG path
                     />
                 </GridItem>
@@ -103,7 +103,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Objective Pricing"
-                        text="Pricing is based on objective factors such as the estimated dimensions of your property and estimated snow accumulation in your area. Pricing changes with each selection you make in the app, so you can request tasks based on your budget."
+                        text="Pricing is based on objective factors such as the estimated dimensions of your property and estimated accumulation in your area. Pricing changes with each selection you make in the app, so you can request tasks based on your budget."
                         icon="/images/pricing.png" // Replace with the correct PNG path
                     />
                 </GridItem>
@@ -111,7 +111,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Weather Detection"
-                        text="By incorporating Dark Sky’s technology, Pacify Snow finds how much snow has accumulated in your specific area. This leads to fairer pricing."
+                        text="Horai App automatically tracks local weather conditions and alerts you when snow or bad weather is expected. You can schedule snow removal or other services proactively, ensuring your property is cleared right on time without any last-minute scrambling. Stay ahead of the weather with Horai's smart detection system!"
                         icon="/images/proximity.png" // Replace with the correct PNG path
                     />
                 </GridItem>
@@ -119,7 +119,7 @@ const Features: FC = () => {
                 <GridItem>
                     <FeatureCard
                         title="Provide Us Feedback"
-                        text="You can rate the quality of a Snow Pacifier’s work, and provide comments through a simple interface. Give it to us straight. This will help us to improve the app to better serve you."
+                        text="You can rate the quality of a contractor's work, and provide comments through a simple interface. Give it to us straight. This will help us to improve the app to better serve you."
                         icon="/images/feedback.png" // Replace with the correct PNG path
                     />
                 </GridItem>

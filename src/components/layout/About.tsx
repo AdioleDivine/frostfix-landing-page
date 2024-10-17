@@ -82,26 +82,10 @@ const AboutSection: FC = () => {
                         color={"#383838"}
                         mb={4}
                     >
-                        Lorem ipsum dolor sit amet consectetur. Urna vulputate
-                        neque arcu eget. Senectus scelerisque egestas quisque
-                        tortor elit eget bibendum amet aliquam. Pellentesque
-                        consectetur non non imperdiet. Sed tincidunt viverra a
-                        aliquet placerat porta tortor. Adipiscing tortor eu
-                        commodo sem in enim sit libero. Odio volutpat nunc
-                        tortor felis nibh sodales id. Vestibulum tristique
-                        convallis nec pulvinar etiam nullam elit neque. Massa
-                        faucibus mattis pulvinar sit mollis lorem ullamcorper
-                        odio faucibus. Nulla varius porttitor pellentesque
-                        tristique gravida massa cursus eros semper. Nunc
-                        suspendisse quis dui fames. Cras ridiculus in fringilla
-                        arcu interdum ultrices laoreet. A tristique orci
-                        venenatis lorem. Nisl tortor ligula tristique nam
-                        suspendisse elit.
+                       Horai App is your reliable companion for seasonal home care. We specialize in offering tailored snow removal, driveway clearing, and leaf blowing services designed to keep your home safe, clean, and accessible throughout the year. Whether it's the harsh winter or the leafy fall, Horai App ensures your property is well-maintained, giving you peace of mind.
                     </Text>
                     <Text fontSize={["1rem", "1rem", "1rem"]} color={"#383838"}>
-                        Pharetra id ipsum diam et ac maecenas aliquet vulputate.
-                        Duis blandit vitae ac risus commodo orci. Cursus feugiat
-                        diam habitasse habitant posuere.
+                    With features like early-hour snow removal and subscription packages, we prioritize convenience and flexibility, allowing homeowners to choose the services that best fit their needs. Whether you're a homeowner looking for professional help or a contractor offering your services, Horai App brings the community together, making seasonal maintenance hassle-free and efficient.
                     </Text>
                 </GridItem>
 
@@ -116,16 +100,18 @@ const AboutSection: FC = () => {
                     </Heading>
                     <VStack align="start" spacing={6}>
                         <BenefitCard
-                            title="More Convenient"
-                            text="Life is complicated. We use innovation to simplify it. From using artificial intelligence to learn property dimensions to adding a 3D property interface that lets you select which areas to shovel, forstix was designed to make snow removal simpler. By doing more, the app lets you do less."
+                            title="Year round Convenience"
+                            text="With seasonal services like snow removal in the winter and leaf blowing in the fall, homeowners can maintain a clean, safe property without the hassle of doing it themselves."
                         />
+
                         <BenefitCard
-                            title="More Connected"
-                            text="Our provider app – Forstix – unlocks the true potential of an on-demand platform. Job requests are sent to a central server and offered to Forstixers based on their availability, real-time location, and other factors. So don’t worry about finding an optimal provider – the app does it for you."
+                            title="Reliable and Local Contractors:"
+                            text="asily connect with trusted, local contractors, view ratings, and book services with confidence, ensuring that your home care needs are met by professionals."
                         />
+
                         <BenefitCard
-                            title="Stronger Communities"
-                            text="We love technology. But people are our true passion. The app brings local communities together to overcome snow. By using the app, you gain back valuable time. Your neighbors serving as Forstix gain additional income. Neighbors helping neighbors – we call that a win-win."
+                            title="Effortless Service Requests"
+                            text="With just a few taps, you can schedule services for your home. No more phone calls or long waits—Horai App streamlines the process so help is just a click away."
                         />
                     </VStack>
                 </GridItem>
