@@ -105,7 +105,7 @@ const AboutSection: FC = () => {
                         />
 
                         <BenefitCard
-                            title="Reliable and Local Contractors:"
+                            title="Reliable and Local Contractors"
                             text="asily connect with trusted, local contractors, view ratings, and book services with confidence, ensuring that your home care needs are met by professionals."
                         />
 
