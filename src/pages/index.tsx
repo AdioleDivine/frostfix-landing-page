@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     return (
         <>
             <Head>
-                <title>Horai</title>
+                <title>Horai App</title>
                 <meta
                     name="description"
                     content="Horai connects homeowners with reliable contracting services and allows contractors to take on jobs in their area. Book a service easily or find local snow removal jobs on-demand with Horai."

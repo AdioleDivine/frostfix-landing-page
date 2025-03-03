@@ -87,7 +87,7 @@ const Hero: FC = () => {
 
                         {/* Link to Waitlist page */}
                         <Flex justifyContent="center" mt={6}>
-                            <Link href="/waitlist" passHref>
+                            <Link href="https://horaiapp.setmore.com" passHref>
                                 <MotionButton
                                     fontSize={"0.9rem"}
                                     backgroundColor={"#0B2545"} // Original background color
@@ -108,7 +108,7 @@ const Hero: FC = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    Get Early Access
+                                    Book Now
                                 </MotionButton>
                             </Link>
                         </Flex>

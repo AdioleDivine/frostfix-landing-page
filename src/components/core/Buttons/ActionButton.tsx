@@ -5,7 +5,7 @@ import { Button, Flex } from "@chakra-ui/react";
 const ActionButton: FC = () => {
     return (
         <Flex>
-            <Link href="/waitlist" passHref>
+            <Link href="https://horaiapp.setmore.com" passHref>
                 {" "}
                 {/* Link to the waitlist page */}
                 <Button
@@ -25,7 +25,7 @@ const ActionButton: FC = () => {
                     }}
                     transition="all 0.3s ease" // Smooth transition for hover effects
                 >
-                    Get Early Access
+                    Book Now
                 </Button>
             </Link>
         </Flex>
